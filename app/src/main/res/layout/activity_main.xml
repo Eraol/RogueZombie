@@ -1,0 +1,72 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+
+    <view
+        android:layout_width="wrap_content"
+        android:layout_height="120dp"
+        class="fr.iutlens.roguezombie.maze.MiniMapView"
+        android:id="@+id/view"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/buttonRight"
+        android:layout_alignStart="@+id/buttonRight" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Down"
+        android:id="@+id/buttonDown"
+        android:onClick="onButtonClick"
+        android:soundEffectsEnabled="false"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Up"
+        android:id="@+id/buttonUp"
+        android:onClick="onButtonClick"
+        android:soundEffectsEnabled="false"
+        android:layout_above="@+id/buttonDown"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Right"
+        android:id="@+id/buttonRight"
+        android:onClick="onButtonClick"
+        android:soundEffectsEnabled="false"
+        android:layout_alignTop="@+id/buttonUp"
+        android:layout_toRightOf="@+id/buttonDown"
+        android:layout_toEndOf="@+id/buttonDown"
+        android:layout_alignBottom="@+id/buttonDown" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Left"
+        android:id="@+id/buttonLeft"
+        android:soundEffectsEnabled="false"
+        android:onClick="onButtonClick"
+        android:layout_toLeftOf="@+id/buttonDown"
+        android:layout_toStartOf="@+id/buttonDown"
+        android:layout_alignTop="@+id/buttonUp"
+        android:layout_alignBottom="@+id/buttonDown" />
+
+    <view
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        class="fr.iutlens.roguezombie.room.RoomView"
+        android:id="@+id/view2"
+        android:layout_above="@+id/buttonUp"
+        android:layout_toStartOf="@+id/buttonRight"
+        android:layout_below="@+id/view"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>
