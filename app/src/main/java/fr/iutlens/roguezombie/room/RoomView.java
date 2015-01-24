@@ -48,11 +48,8 @@ public class RoomView extends View {
 
     private SpriteSheet sprite;
     private Paint paint;
-    private int w;
-    private int h;
-    private int x;
-    private int y;
-    private int dir;
+
+    private int w,h,x,y,dir;
     private boolean roomChanged;
 
     public RoomView(Context context) {
@@ -87,40 +84,60 @@ public class RoomView extends View {
         map = new HashMap<Integer,Sprite>();
         next = new HashMap<Integer,Sprite>();
 
-        setMaze(new Maze(new Coordinate(6, 6)));
-        setRoom(3,3,1);
+        if (isInEditMode()) { // affiche quelque-chose dans l'éditeur.
+            setMaze(new Maze(new Coordinate(6, 6)), new Coordinate(10, 10));
+            setRoom(3, 3, 1);
+        }
     }
 
     public void setListener(OnRoomOutListener listener) {
         this.listener = listener;
     }
 
-    public void setMaze(Maze maze){
+
+    public void setMaze(Maze maze, Coordinate coordinate){
         this.maze = maze;
-        this.coordinate = new Coordinate(10,10);
+        this.coordinate = coordinate;
 
         setZoom(w,h);
         invalidate();
     }
 
+    /***
+     * Anime la vue.
+     *
+     * Tous les éléments avancent d'une étape.
+     */
     public void act(){
+
+        //Si on est en train de changer de salle
         if (roomChanged) setRoom();
 
+        // Parcours de tous les sprites
         for(Sprite sprite : map.values()) {
-            sprite.act();
-            int ndx = sprite.getNdx();
+            sprite.act(); // action
+            int ndx = sprite.getNdx(); // Prise en compte de la nouvelle position
             next.put(ndx,sprite);
         }
 
+        // map <- next, et on recycle map pour limiter les instanciations inutiles.
         Map tmp = map;
         map = next;
         next = tmp;
         tmp.clear();
 
+        // La vue a changé, on demande un rafraîchissement de l'affichage.
         invalidate();
     }
-    
 
+    /***
+     * Demande un changement de salle, dans la direction indiquée.
+     * Le changement ne sera effectif que lors du prochain appel à act().
+     *
+     * @param x
+     * @param y
+     * @param dir
+     */
     public void setRoom(int x,int y, int dir) {
         this.x = x;
         this.y = y;
@@ -129,55 +146,57 @@ public class RoomView extends View {
         this.roomChanged = true;
     }
 
+
+    /***
+     * Réalise le changement de salle demandé précédemment.
+     */
     private void setRoom(){
         roomChanged = false;
         map.clear();
 
+        // Ajout d'un "monstre" à des coordonnées aléatoires
         int xm = (int) (Math.random()*(coordinate.getWidth()-2))+1;
         int ym = (int) (Math.random()*(coordinate.getHeight()-2))+1;
         map.put(coordinate.getNdx(xm,ym),new MonsterSprite(xm,ym,3,this));
+
+        // Affichage des murs partout où il n'y a pas de porte.
         int door = maze.get(x,y);
-
         int p =1;
-        for(int i = 0; i <4; ++i){
-
-            if ((door & p)==0){
+        for(int i = 0; i <4; ++i){ // Pour chacune des 4 directions
+            if ((door & p)==0){ // Si il y a un mur
+                // Calcul d'un des coin (a,b)
                 int a = (coordinate.DIR[i][0]+coordinate.DIR[(i+1)&3][0]+1)*(coordinate.getWidth()-1)/2;
                 int b = (coordinate.DIR[i][1]+coordinate.DIR[(i+1)&3][1]+1)*(coordinate.getHeight()-1)/2;
 
+                // Calcul de la direction (da,db) dans laquelle construire le mur
                 int da = coordinate.DIR[(i+3)&3][0];
                 int db = coordinate.DIR[(i+3)&3][1];
 
-/*                if (i+dir == 3){
-                    hero = new HeroSprite(a+5*da, b+5*db,3,this);
-                    map.put(coordinate.getNdx(a+5*da,b+5*db),hero);
-                } */
-
-
+                // Ajout des sprites aux coordonnées correspondantes,
                 int ndx = coordinate.getNdx(a,b);
-                while (ndx>=0){
+                while (ndx>=0){ // Jusqu'au bord de la salle
                     map.put(ndx,new DecorSprite(a,b,ndx,1));
                     a+= da;
                     b+= db;
                     ndx = coordinate.getNdx(a,b);
                 }
             }
-
             p <<=1;
         }
 
-
+        // Si il n'existe pas déjà, crée le héro.
         if (hero == null){
             hero = new HeroSprite(5, 5,2,this);
         }
+
+        // Insère le héro dans la liste des sprites, aux coordonnées adéquates.
         map.put(hero.getNdx(), hero);
 
-
+        //demande un rafraîchissement de la vue
         invalidate();
     }
 
     public void onDraw(Canvas canvas){
-
         if (sprite == null || maze == null){ //si les sprites ne sont pas chargé, on ne fait rien.
             return;
         }
@@ -191,6 +210,7 @@ public class RoomView extends View {
         //On peint le fond
         canvas.drawRect(0,0,coordinate.getHeight(),coordinate.getHeight(),paint);
 
+        //On peint chacun des sprite
         for(Sprite s : map.values()){
             float i = s.getX();
             float j = s.getY();
@@ -244,6 +264,16 @@ public class RoomView extends View {
         return listener;
     }
 
+    /***
+     * Détermine si une case est libre.
+     *
+     * Une case est libre si les coordonnées sont valides,
+     * et qu'aucun sprite ne les occupe.
+     *
+     * @param x
+     * @param y
+     * @return
+     */
     public boolean isFree(int x, int y) {
         final int ndx = coordinate.getNdx(x, y);
         if (ndx == -1) return false;
@@ -251,6 +281,11 @@ public class RoomView extends View {
         return map.get(ndx) == null && next.get(ndx) == null;
     }
 
+    /**
+     * Demande un déplacement dans la direction indiquée
+     *
+     * @param dir
+     */
     public void move(int dir) {
         hero.setDir(dir);
     }

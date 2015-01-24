@@ -27,14 +27,19 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
 
     @Override
     public void onRoomOut( int x, int y, int dir) {
+        //Calcul de la prochaine salle dans la direction indiquée
         int ndx = coordinate.getNext(coordinate.getNdx(x, y), dir);
 
+        //mise à jour de la minimap
         maze.visit(ndx);
         miniMapView.invalidate();
 
+        //mise à jour de la salle affichée
         roomView.setRoom(coordinate.getI(ndx), coordinate.getJ(ndx), dir);
     }
 
+
+    //Gestion du temps réel
     static class RefreshHandler extends Handler {
         WeakReference<MainActivity> weak;
 
@@ -67,23 +72,28 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Création du layrinthe 10x10
         coordinate = new Coordinate(10,10);
         maze = new Maze(coordinate);
 
+        // Configuration de la minimap
         miniMapView = (MiniMapView) findViewById(R.id.view);
         miniMapView.setMaze(maze);
-        int ndx = coordinate.getNdx(5,5);
-        maze.visit(ndx);
+        maze.visit(coordinate.getNdx(5,5)); // On commence en 5x5
 
+        // Configuration de la salle
         roomView = (RoomView) findViewById(R.id.view2);
         roomView.setListener(this);
-        roomView.setMaze(maze);
+        roomView.setMaze(maze, new Coordinate(10, 10));
         roomView.setRoom(5, 5, -1);
 
+        // On démarre le jeu !
         update();
     }
 
     public void onButtonClick(View view){
+
+         // Détection de la direction choisie
         int dir = -1;
         switch (view.getId()){
             case R.id.buttonRight :
@@ -99,6 +109,8 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
                 dir = 3;
                 break;
         }
+
+        // Demande le déplacement dans la direction
         roomView.move(dir);
     }
 

@@ -16,6 +16,7 @@ public class DecorSprite implements Sprite {
 
     @Override
     public void act() {
+        // Le décor ne bouge pas.
     }
 
     @Override

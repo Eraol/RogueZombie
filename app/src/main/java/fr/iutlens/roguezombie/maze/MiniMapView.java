@@ -105,6 +105,7 @@ public class MiniMapView extends View {
             }
         }
 
+        //On affiche la position actuelle
         int last = maze.getLast();
         if (last>=0){
             int i = coordinate.getI(last);
@@ -145,6 +146,7 @@ public class MiniMapView extends View {
         transform.setRectToRect(src,dst, Matrix.ScaleToFit.CENTER);
         transform.invert(reverse);
 
+        // Calcul de la taille du marqueur de position.
         float[] s = {0.5f,0.5f};
         float[] d = new float[2];
         transform.mapVectors(d,s);
