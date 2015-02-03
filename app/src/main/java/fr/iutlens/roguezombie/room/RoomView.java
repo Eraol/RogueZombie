@@ -31,7 +31,7 @@ public class RoomView extends View {
     Coordinate coordinate;
 
     private Map<Integer, Sprite> map, next;
-    private HeroSprite hero;
+    public HeroSprite hero;
 
     private OnRoomOutListener listener;
 
