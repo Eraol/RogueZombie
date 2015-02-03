@@ -49,7 +49,6 @@ public class HeroSprite extends MonsterSprite {
         int d = nextDir;
         nextDir = -1;
         if (d != -1 && !room.isFree(x+Coordinate.DIR[d][0],y+Coordinate.DIR[d][1])) d = -1;
-
         return d;
     }
 

@@ -16,6 +16,7 @@ import java.util.Map;
 import fr.iutlens.roguezombie.R;
 import fr.iutlens.roguezombie.maze.Maze;
 import fr.iutlens.roguezombie.room.sprite.DecorSprite;
+import fr.iutlens.roguezombie.room.sprite.FuyardSprite;
 import fr.iutlens.roguezombie.room.sprite.HeroSprite;
 import fr.iutlens.roguezombie.room.sprite.MonsterSprite;
 import fr.iutlens.roguezombie.room.sprite.Sprite;
@@ -31,7 +32,8 @@ public class RoomView extends View {
     Coordinate coordinate;
 
     private Map<Integer,Sprite> map,next;
-    private HeroSprite hero;
+    public HeroSprite hero;
+    public FuyardSprite fuyard;
 
     private OnRoomOutListener listener;
 
@@ -157,7 +159,7 @@ public class RoomView extends View {
         // Ajout d'un "monstre" à des coordonnées aléatoires
         int xm = (int) (Math.random()*(coordinate.getWidth()-2))+1;
         int ym = (int) (Math.random()*(coordinate.getHeight()-2))+1;
-        map.put(coordinate.getNdx(xm,ym),new MonsterSprite(xm,ym,3,this));
+        map.put(coordinate.getNdx(xm,ym),new FuyardSprite(xm,ym,3,this));
 
         // Affichage des murs partout où il n'y a pas de porte.
         int door = maze.get(x,y);
@@ -185,12 +187,14 @@ public class RoomView extends View {
         }
 
         // Si il n'existe pas déjà, crée le héro.
-        if (hero == null){
+        if (hero == null ){
             hero = new HeroSprite(5, 5,2,this);
+            //fuyard = new FuyardSprite(5, 5, 2, this);
         }
 
         // Insère le héro dans la liste des sprites, aux coordonnées adéquates.
         map.put(hero.getNdx(), hero);
+    //    map.put(fuyard.getNdx(), fuyard);
 
         //demande un rafraîchissement de la vue
         invalidate();

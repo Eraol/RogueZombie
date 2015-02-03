@@ -17,7 +17,7 @@ public class MonsterSprite implements Sprite {
     }
 
     protected int x,y,ndx; // position
-    private int id; // numéro d'image
+    public int id; // numéro d'image
     protected int dir; // direction
     protected float progress; // 0 : position précédente / 1 : prochaine position
 

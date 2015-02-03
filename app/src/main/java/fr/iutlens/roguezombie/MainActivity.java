@@ -17,7 +17,7 @@ import fr.iutlens.roguezombie.room.RoomView;
 import fr.iutlens.roguezombie.util.Coordinate;
 
 
-public class MainActivity extends ActionBarActivity implements OnRoomOutListener {
+public class  MainActivity extends ActionBarActivity implements OnRoomOutListener {
 
 
     private Maze maze;
