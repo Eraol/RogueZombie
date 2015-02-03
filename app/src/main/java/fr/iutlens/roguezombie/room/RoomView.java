@@ -32,8 +32,7 @@ public class RoomView extends View {
     Coordinate coordinate;
 
     private Map<Integer,Sprite> map,next;
-    public HeroSprite hero;
-    public FuyardSprite fuyard;
+    private HeroSprite hero;
 
     private OnRoomOutListener listener;
 
@@ -107,7 +106,7 @@ public class RoomView extends View {
 
     /***
      * Anime la vue.
-     *
+     * <p/>
      * Tous les éléments avancent d'une étape.
      */
     public void act(){
@@ -116,10 +115,14 @@ public class RoomView extends View {
         if (roomChanged) setRoom();
 
         // Parcours de tous les sprites
-        for(Sprite sprite : map.values()) {
-            sprite.act(); // action
-            int ndx = sprite.getNdx(); // Prise en compte de la nouvelle position
-            next.put(ndx,sprite);
+        for (Sprite sprite : map.values()) {
+
+
+            if(!sprite.isDead()) {
+                sprite.act(); // action
+                int ndx = sprite.getNdx(); // Prise en compte de la nouvelle position
+                next.put(ndx, sprite);
+            }
         }
 
         // map <- next, et on recycle map pour limiter les instanciations inutiles.
@@ -187,14 +190,12 @@ public class RoomView extends View {
         }
 
         // Si il n'existe pas déjà, crée le héro.
-        if (hero == null ){
+        if (hero == null){
             hero = new HeroSprite(5, 5,2,this);
-            //fuyard = new FuyardSprite(5, 5, 2, this);
         }
 
         // Insère le héro dans la liste des sprites, aux coordonnées adéquates.
         map.put(hero.getNdx(), hero);
-    //    map.put(fuyard.getNdx(), fuyard);
 
         //demande un rafraîchissement de la vue
         invalidate();
@@ -283,6 +284,20 @@ public class RoomView extends View {
         if (ndx == -1) return false;
 
         return map.get(ndx) == null && next.get(ndx) == null;
+    }
+
+    /*
+    CECI EST LA FONCTION PERMETTANT DE CONNAITRE LE TYPE DE L'OBJET TOUCHE
+     */
+
+    public Sprite getSprite(int x, int y) {
+        final int ndx = coordinate.getNdx(x, y);
+        if (ndx == -1) return null;
+        if (map.get(ndx) != null) {
+            return map.get(ndx);
+        } else {
+            return next.get(ndx);
+        }
     }
 
     /**
