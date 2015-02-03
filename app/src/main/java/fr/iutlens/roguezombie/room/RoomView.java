@@ -16,6 +16,7 @@ import java.util.Map;
 import fr.iutlens.roguezombie.R;
 import fr.iutlens.roguezombie.maze.Maze;
 import fr.iutlens.roguezombie.room.sprite.DecorSprite;
+import fr.iutlens.roguezombie.room.sprite.FuyardSprite;
 import fr.iutlens.roguezombie.room.sprite.HeroSprite;
 import fr.iutlens.roguezombie.room.sprite.MonsterSprite;
 import fr.iutlens.roguezombie.room.sprite.Sprite;
@@ -30,7 +31,7 @@ public class RoomView extends View {
     Maze maze;
     Coordinate coordinate;
 
-    private Map<Integer, Sprite> map, next;
+    private Map<Integer,Sprite> map,next;
     private HeroSprite hero;
 
     private OnRoomOutListener listener;
@@ -42,14 +43,14 @@ public class RoomView extends View {
     private RectF tmp;
 
     // Configuration du mode de dessin
-    static PaintFlagsDrawFilter setfil = new PaintFlagsDrawFilter(0,
+    static PaintFlagsDrawFilter setfil= new PaintFlagsDrawFilter(0,
             Paint.FILTER_BITMAP_FLAG | Paint.ANTI_ALIAS_FLAG);
     private Rect src;
 
     private SpriteSheet sprite;
     private Paint paint;
 
-    private int w, h, x, y, dir;
+    private int w,h,x,y,dir;
     private boolean roomChanged;
 
     public RoomView(Context context) {
@@ -67,12 +68,12 @@ public class RoomView extends View {
         init();
     }
 
-    private void init() {
+    private void init(){
         transform = new Matrix();
         reverse = new Matrix();
 
         sprite = SpriteSheet.get(this.getContext(), R.drawable.sprite);
-        src = new Rect(0, 0, sprite.w, sprite.h);
+        src = new Rect(0,0, sprite.w, sprite.h);
         tmp = new RectF();
 
         paint = new Paint();
@@ -81,8 +82,8 @@ public class RoomView extends View {
         paint.setStyle(Paint.Style.FILL);
         paint.setAntiAlias(true);
 
-        map = new HashMap<Integer, Sprite>();
-        next = new HashMap<Integer, Sprite>();
+        map = new HashMap<Integer,Sprite>();
+        next = new HashMap<Integer,Sprite>();
 
         if (isInEditMode()) { // affiche quelque-chose dans l'éditeur.
             setMaze(new Maze(new Coordinate(6, 6)), new Coordinate(10, 10));
@@ -95,20 +96,20 @@ public class RoomView extends View {
     }
 
 
-    public void setMaze(Maze maze, Coordinate coordinate) {
+    public void setMaze(Maze maze, Coordinate coordinate){
         this.maze = maze;
         this.coordinate = coordinate;
 
-        setZoom(w, h);
+        setZoom(w,h);
         invalidate();
     }
 
-    /**
+    /***
      * Anime la vue.
      * <p/>
      * Tous les éléments avancent d'une étape.
      */
-    public void act() {
+    public void act(){
 
         //Si on est en train de changer de salle
         if (roomChanged) setRoom();
@@ -134,7 +135,7 @@ public class RoomView extends View {
         invalidate();
     }
 
-    /**
+    /***
      * Demande un changement de salle, dans la direction indiquée.
      * Le changement ne sera effectif que lors du prochain appel à act().
      *
@@ -142,7 +143,7 @@ public class RoomView extends View {
      * @param y
      * @param dir
      */
-    public void setRoom(int x, int y, int dir) {
+    public void setRoom(int x,int y, int dir) {
         this.x = x;
         this.y = y;
         this.dir = dir;
@@ -151,46 +152,46 @@ public class RoomView extends View {
     }
 
 
-    /**
+    /***
      * Réalise le changement de salle demandé précédemment.
      */
-    private void setRoom() {
+    private void setRoom(){
         roomChanged = false;
         map.clear();
 
         // Ajout d'un "monstre" à des coordonnées aléatoires
-        int xm = (int) (Math.random() * (coordinate.getWidth() - 2)) + 1;
-        int ym = (int) (Math.random() * (coordinate.getHeight() - 2)) + 1;
-        map.put(coordinate.getNdx(xm, ym), new MonsterSprite(xm, ym, 3, this));
+        int xm = (int) (Math.random()*(coordinate.getWidth()-2))+1;
+        int ym = (int) (Math.random()*(coordinate.getHeight()-2))+1;
+        map.put(coordinate.getNdx(xm,ym),new FuyardSprite(xm,ym,3,this));
 
         // Affichage des murs partout où il n'y a pas de porte.
-        int door = maze.get(x, y);
-        int p = 1;
-        for (int i = 0; i < 4; ++i) { // Pour chacune des 4 directions
-            if ((door & p) == 0) { // Si il y a un mur
+        int door = maze.get(x,y);
+        int p =1;
+        for(int i = 0; i <4; ++i){ // Pour chacune des 4 directions
+            if ((door & p)==0){ // Si il y a un mur
                 // Calcul d'un des coin (a,b)
-                int a = (coordinate.DIR[i][0] + coordinate.DIR[(i + 1) & 3][0] + 1) * (coordinate.getWidth() - 1) / 2;
-                int b = (coordinate.DIR[i][1] + coordinate.DIR[(i + 1) & 3][1] + 1) * (coordinate.getHeight() - 1) / 2;
+                int a = (coordinate.DIR[i][0]+coordinate.DIR[(i+1)&3][0]+1)*(coordinate.getWidth()-1)/2;
+                int b = (coordinate.DIR[i][1]+coordinate.DIR[(i+1)&3][1]+1)*(coordinate.getHeight()-1)/2;
 
                 // Calcul de la direction (da,db) dans laquelle construire le mur
-                int da = coordinate.DIR[(i + 3) & 3][0];
-                int db = coordinate.DIR[(i + 3) & 3][1];
+                int da = coordinate.DIR[(i+3)&3][0];
+                int db = coordinate.DIR[(i+3)&3][1];
 
                 // Ajout des sprites aux coordonnées correspondantes,
-                int ndx = coordinate.getNdx(a, b);
-                while (ndx >= 0) { // Jusqu'au bord de la salle
-                    map.put(ndx, new DecorSprite(a, b, ndx, 1));
-                    a += da;
-                    b += db;
-                    ndx = coordinate.getNdx(a, b);
+                int ndx = coordinate.getNdx(a,b);
+                while (ndx>=0){ // Jusqu'au bord de la salle
+                    map.put(ndx,new DecorSprite(a,b,ndx,1));
+                    a+= da;
+                    b+= db;
+                    ndx = coordinate.getNdx(a,b);
                 }
             }
-            p <<= 1;
+            p <<=1;
         }
 
         // Si il n'existe pas déjà, crée le héro.
-        if (hero == null) {
-            hero = new HeroSprite(5, 5, 2, this);
+        if (hero == null){
+            hero = new HeroSprite(5, 5,2,this);
         }
 
         // Insère le héro dans la liste des sprites, aux coordonnées adéquates.
@@ -200,8 +201,8 @@ public class RoomView extends View {
         invalidate();
     }
 
-    public void onDraw(Canvas canvas) {
-        if (sprite == null || maze == null) { //si les sprites ne sont pas chargé, on ne fait rien.
+    public void onDraw(Canvas canvas){
+        if (sprite == null || maze == null){ //si les sprites ne sont pas chargé, on ne fait rien.
             return;
         }
 
@@ -212,19 +213,20 @@ public class RoomView extends View {
         canvas.concat(transform);
 
         //On peint le fond
-        canvas.drawRect(0, 0, coordinate.getHeight(), coordinate.getHeight(), paint);
+        canvas.drawRect(0,0,coordinate.getHeight(),coordinate.getHeight(),paint);
 
         //On peint chacun des sprite
-        for (Sprite s : map.values()) {
+        for(Sprite s : map.values()){
             float i = s.getX();
             float j = s.getY();
-            tmp.set(i, j, i + 1, j + 1);
-            canvas.drawBitmap(sprite.getBitmap(s.getSpriteId()), src, tmp, null);
+            tmp.set(i,j,i+1,j+1);
+            canvas.drawBitmap(sprite.getBitmap(s.getSpriteId()), src,tmp,null);
         }
 
         // On restore la transformation originale.
         canvas.restore();
     }
+
 
 
     @Override
@@ -235,23 +237,22 @@ public class RoomView extends View {
         setZoom(w, h);
     }
 
-    /**
+    /***
      * Calcul du centrage du contenu de la vue
-     *
      * @param w
      * @param h
      */
     private void setZoom(int w, int h) {
-        if (w <= 0 || h <= 0 || maze == null) return;
+        if (w<=0 ||h <=0 || maze == null) return;
 
         // Dimensions dans lesquelles ont souhaite dessiner
-        RectF src = new RectF(0, 0, coordinate.getWidth(), coordinate.getHeight());
+        RectF src = new RectF(0,0,coordinate.getWidth(),coordinate.getHeight());
 
         // Dimensions à notre disposition
-        RectF dst = new RectF(0, 0, w, h);
+        RectF dst = new RectF(0,0,w,h);
 
         // Calcule de la transfomrmation désirée (et de son inverse)
-        transform.setRectToRect(src, dst, Matrix.ScaleToFit.CENTER);
+        transform.setRectToRect(src,dst, Matrix.ScaleToFit.CENTER);
         transform.invert(reverse);
 
     }
@@ -268,9 +269,9 @@ public class RoomView extends View {
         return listener;
     }
 
-    /**
+    /***
      * Détermine si une case est libre.
-     * <p/>
+     *
      * Une case est libre si les coordonnées sont valides,
      * et qu'aucun sprite ne les occupe.
      *
@@ -307,5 +308,4 @@ public class RoomView extends View {
     public void move(int dir) {
         hero.setDir(dir);
     }
-
 }
