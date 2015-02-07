@@ -1,12 +1,15 @@
 package fr.iutlens.roguezombie;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
 
@@ -24,6 +27,7 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
     private Coordinate coordinate;
     private RoomView roomView;
     private MiniMapView miniMapView;
+    private int score;
 
     @Override
     public void onRoomOut( int x, int y, int dir) {
@@ -64,11 +68,18 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
     private void update() {
         handler.sleep(40);
         roomView.act();
+        updateScore();
     }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Remove title bar
+
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //Remove notification bar
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -90,6 +101,13 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
         // On démarre le jeu !
         update();
     }
+
+    // Création du score ---------------------------------------------------------------------- MADE BY #TeamCoupDeGriffe --------------------------------------
+    void updateScore() {
+
+        ((TextView) findViewById(R.id.scoreView)).setText("Cerveaux : " + roomView.hero.score);
+    }
+    //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     public void onButtonClick(View view){
 
@@ -123,7 +141,7 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
     }
 
 
-    // Recupere l'ID des objets toucher
+    // Recupere l'ID des objet
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

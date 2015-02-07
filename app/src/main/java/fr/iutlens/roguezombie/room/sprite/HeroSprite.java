@@ -1,5 +1,6 @@
 package fr.iutlens.roguezombie.room.sprite;
 
+import fr.iutlens.roguezombie.MainActivity;
 import fr.iutlens.roguezombie.room.RoomView;
 import fr.iutlens.roguezombie.util.Coordinate;
 
@@ -9,10 +10,12 @@ import fr.iutlens.roguezombie.util.Coordinate;
 public class HeroSprite extends MonsterSprite {
 
     private int nextDir;
+    public int score;
 
     public HeroSprite(int x, int y, int id, RoomView room) {
         super(x, y, id, room);
         nextDir = -1;
+        score=0;
     }
 
 
@@ -60,6 +63,7 @@ public class HeroSprite extends MonsterSprite {
             //Si le sprite est un monstre alors le sprite est mort (Ne pas oublier ALT+Entree pour la méthode)
             if(sprite instanceof MonsterSprite) {
                 ((MonsterSprite)sprite).kill();
+                score = score+1;
             }
             d = -1; // SI Il y a quelqchose on ce déplace pas.
         }

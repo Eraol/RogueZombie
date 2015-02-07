@@ -31,8 +31,8 @@ public class RoomView extends View {
     Maze maze;
     Coordinate coordinate;
 
-    private Map<Integer,Sprite> map,next;
-    private HeroSprite hero;
+    private Map<Integer, Sprite> map, next;
+    public HeroSprite hero;
 
     private OnRoomOutListener listener;
 
