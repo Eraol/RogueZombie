@@ -16,6 +16,7 @@ import fr.iutlens.roguezombie.maze.Maze;
 import fr.iutlens.roguezombie.maze.MiniMapView;
 import fr.iutlens.roguezombie.room.OnRoomOutListener;
 import fr.iutlens.roguezombie.room.RoomView;
+import fr.iutlens.roguezombie.joystick.JoystickView;
 import fr.iutlens.roguezombie.util.Coordinate;
 
 
@@ -26,6 +27,7 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
     private Coordinate coordinate;
     private RoomView roomView;
     private MiniMapView miniMapView;
+    private JoystickView JoystickView;
 
 
     @Override
@@ -94,9 +96,7 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
         roomView.setRoom(5, 5, -1);
 
 
-        roomView = (RoomView) findViewById(R.id.joystick);
-
-
+        JoystickView = (JoystickView) findViewById(R.id.joystick);
 
 
         // On démarre le jeu !
