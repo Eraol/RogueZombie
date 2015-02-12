@@ -7,17 +7,20 @@ import fr.iutlens.roguezombie.util.Coordinate;
  * Created by dubois on 23/01/15.
  */
 public class MonsterSprite implements Sprite {
+    private boolean dead;
+
     public MonsterSprite(int x, int y, int id, RoomView room) {
         this.x = x;
         this.y = y;
         this.id = id;
         this.room = room;
         this.dir = -1;
+        dead=false;
         ndx = room.getCoordinate().getNdx(x, y);
     }
 
     protected int x,y,ndx; // position
-    private int id; // numéro d'image
+    public int id; // numéro d'image
     protected int dir; // direction
     protected float progress; // 0 : position précédente / 1 : prochaine position
 
@@ -79,5 +82,14 @@ public class MonsterSprite implements Sprite {
     @Override
     public int getNdx() {
         return ndx;
+    }
+
+    @Override
+    public boolean isDead() {
+        return dead;
+    }
+
+    public void kill() {
+        dead=true;
     }
 }

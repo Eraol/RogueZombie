@@ -10,4 +10,6 @@ public interface Sprite {
     public float getX();
     public float getY();
     public int getNdx();
+
+    boolean isDead();
 }

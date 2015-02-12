@@ -16,6 +16,7 @@ import java.util.Map;
 import fr.iutlens.roguezombie.R;
 import fr.iutlens.roguezombie.maze.Maze;
 import fr.iutlens.roguezombie.room.sprite.DecorSprite;
+import fr.iutlens.roguezombie.room.sprite.FuyardSprite;
 import fr.iutlens.roguezombie.room.sprite.HeroSprite;
 import fr.iutlens.roguezombie.room.sprite.MonsterSprite;
 import fr.iutlens.roguezombie.room.sprite.Sprite;
@@ -30,8 +31,8 @@ public class RoomView extends View {
     Maze maze;
     Coordinate coordinate;
 
-    private Map<Integer,Sprite> map,next;
-    private HeroSprite hero;
+    private Map<Integer, Sprite> map, next;
+    public HeroSprite hero;
 
     private OnRoomOutListener listener;
 
@@ -105,7 +106,7 @@ public class RoomView extends View {
 
     /***
      * Anime la vue.
-     *
+     * <p/>
      * Tous les éléments avancent d'une étape.
      */
     public void act(){
@@ -114,10 +115,14 @@ public class RoomView extends View {
         if (roomChanged) setRoom();
 
         // Parcours de tous les sprites
-        for(Sprite sprite : map.values()) {
-            sprite.act(); // action
-            int ndx = sprite.getNdx(); // Prise en compte de la nouvelle position
-            next.put(ndx,sprite);
+        for (Sprite sprite : map.values()) {
+
+
+            if(!sprite.isDead()) {
+                sprite.act(); // action
+                int ndx = sprite.getNdx(); // Prise en compte de la nouvelle position
+                next.put(ndx, sprite);
+            }
         }
 
         // map <- next, et on recycle map pour limiter les instanciations inutiles.
@@ -157,7 +162,7 @@ public class RoomView extends View {
         // Ajout d'un "monstre" à des coordonnées aléatoires
         int xm = (int) (Math.random()*(coordinate.getWidth()-2))+1;
         int ym = (int) (Math.random()*(coordinate.getHeight()-2))+1;
-        map.put(coordinate.getNdx(xm,ym),new MonsterSprite(xm,ym,3,this));
+        map.put(coordinate.getNdx(xm,ym),new FuyardSprite(xm,ym,3,this));
 
         // Affichage des murs partout où il n'y a pas de porte.
         int door = maze.get(x,y);
@@ -279,6 +284,20 @@ public class RoomView extends View {
         if (ndx == -1) return false;
 
         return map.get(ndx) == null && next.get(ndx) == null;
+    }
+
+    /*
+    CECI EST LA FONCTION PERMETTANT DE CONNAITRE LE TYPE DE L'OBJET TOUCHE
+     */
+
+    public Sprite getSprite(int x, int y) {
+        final int ndx = coordinate.getNdx(x, y);
+        if (ndx == -1) return null;
+        if (map.get(ndx) != null) {
+            return map.get(ndx);
+        } else {
+            return next.get(ndx);
+        }
     }
 
     /**
