@@ -1,5 +1,7 @@
 package fr.iutlens.roguezombie.room.sprite;
 
+import android.view.animation.ScaleAnimation;
+
 import fr.iutlens.roguezombie.MainActivity;
 import fr.iutlens.roguezombie.room.RoomView;
 import fr.iutlens.roguezombie.util.Coordinate;
@@ -62,7 +64,7 @@ public class HeroSprite extends MonsterSprite {
 
             //Si le sprite est un monstre alors le sprite est mort (Ne pas oublier ALT+Entree pour la méthode)
             if(sprite instanceof MonsterSprite) {
-                ((MonsterSprite)sprite).kill();
+                        ((MonsterSprite) sprite).kill();
                 score = score+1;
             }
             d = -1; // SI Il y a quelqchose on ce déplace pas.
