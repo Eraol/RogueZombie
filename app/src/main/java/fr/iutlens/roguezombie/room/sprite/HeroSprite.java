@@ -9,11 +9,12 @@ import fr.iutlens.roguezombie.util.Coordinate;
 public class HeroSprite extends MonsterSprite {
 
     private int nextDir;
-    public int score=0;
+    public int score;
 
     public HeroSprite(int x, int y, int id, RoomView room) {
         super(x, y, id, room);
         nextDir = -1;
+        score=0;
     }
 
 
