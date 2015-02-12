@@ -160,7 +160,7 @@ public class RoomView extends View {
         map.clear();
 
         int z=0;
-        int k= (int) (Math.random() * (5 * 1) + 1);
+        int k= (int) (Math.random() * (6 - 1) + 1);
         while (z < k) {
             z++;
 // Ajout d'un "monstre" à des coordonnées aléatoires
