@@ -119,28 +119,28 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
     }
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    public void onButtonClick(View view){
+    // public void onButtonClick(View view){
 
          // Détection de la direction choisie
-        int dir = -1;
-        switch (view.getId()){
-            case R.id.buttonRight :
-                dir = 0;
-                break;
-            case R.id.buttonDown :
-                dir = 1;
-                break;
-            case R.id.buttonLeft :
-                dir = 2;
-                break;
-            case R.id.buttonUp :
-                dir = 3;
-                break;
-        }
+    //  int dir = -1;
+    //  switch (view.getId()){
+    //        case R.id.buttonRight :
+            //          dir = 0;
+    //           break;
+    //        case R.id.buttonDown :
+            //           dir = 1;
+    //           break;
+    //        case R.id.buttonLeft :
+            //           dir = 2;
+    //             break;
+    //         case R.id.buttonUp :
+    //              dir = 3;
+    //             break;
+    //     }
 
         // Demande le déplacement dans la direction
-        roomView.move(dir);
-    }
+    //      roomView.move(dir);
+    //   }
 
 
     @Override
