@@ -1,9 +1,11 @@
 package fr.iutlens.roguezombie;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +26,7 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
     private Coordinate coordinate;
     private RoomView roomView;
     private MiniMapView miniMapView;
+
 
     @Override
     public void onRoomOut( int x, int y, int dir) {
@@ -63,7 +66,10 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
 
     private void update() {
         handler.sleep(40);
+
+    Log.d("Pad", "" + 2);
         roomView.act();
+
     }
 
 
@@ -87,32 +93,42 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
         roomView.setMaze(maze, new Coordinate(10, 10));
         roomView.setRoom(5, 5, -1);
 
+
+        roomView = (RoomView) findViewById(R.id.joystick);
+
+
+
+
         // On démarre le jeu !
         update();
     }
 
-    public void onButtonClick(View view){
+   // public void onButtonClick(View view){
 
          // Détection de la direction choisie
-        int dir = -1;
-        switch (view.getId()){
-            case R.id.buttonRight :
-                dir = 0;
-                break;
-            case R.id.buttonDown :
-                dir = 1;
-                break;
-            case R.id.buttonLeft :
-                dir = 2;
-                break;
-            case R.id.buttonUp :
-                dir = 3;
-                break;
-        }
+       // int dir = -1;
+       // switch (view.getId()){
+         //   case R.id.buttonRight :
+               // dir = 0;
+              //  break;
+            //case R.id.buttonDown :
+            //    dir = 1;
+              //  break;
+            //case R.id.buttonLeft :
+             //   dir = 2;
+           //     break;
+         //   case R.id.buttonUp :
+        //        dir = 3;
+       //         break;
+     //   }
 
         // Demande le déplacement dans la direction
-        roomView.move(dir);
-    }
+    //    roomView.move(dir);
+   // }
+
+
+
+
 
 
     @Override
@@ -136,4 +152,7 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
 
         return super.onOptionsItemSelected(item);
     }
+
 }
+
+
