@@ -10,7 +10,10 @@
         android:layout_height="120dp"
         class="fr.iutlens.roguezombie.maze.MiniMapView"
         android:id="@+id/view"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/scoreView"
+        android:layout_alignLeft="@+id/joystick"
+        android:layout_alignStart="@+id/joystick" />
 
     <view
         android:layout_width="wrap_content"
