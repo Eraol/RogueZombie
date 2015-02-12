@@ -313,7 +313,9 @@ public class RoomView extends View {
      *
      * @param dir
      */
+
     public void move(int dir) {
-        hero.setDir(dir);
+        if (hero != null)
+            hero.setDir(dir);
     }
 }

@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +19,7 @@ import fr.iutlens.roguezombie.maze.Maze;
 import fr.iutlens.roguezombie.maze.MiniMapView;
 import fr.iutlens.roguezombie.room.OnRoomOutListener;
 import fr.iutlens.roguezombie.room.RoomView;
+import fr.iutlens.roguezombie.joystick.JoystickView;
 import fr.iutlens.roguezombie.util.Coordinate;
 
 
@@ -27,7 +30,9 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
     private Coordinate coordinate;
     private RoomView roomView;
     private MiniMapView miniMapView;
+    private JoystickView joystickView;
     private int score;
+
 
     @Override
     public void onRoomOut( int x, int y, int dir) {
@@ -67,7 +72,20 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
 
     private void update() {
         handler.sleep(40);
+
+    Log.d("Pad", "" + Math.round(joystickView.getRadial()));
+
+
+        int dir = (int) (4+Math.round(joystickView.getAngle()/(Math.PI/2)))%4;
+        int longueur = (int) Math.round(joystickView.getRadial());
+        if (longueur == 0) {
+            dir = -1;
+        }
+
+        roomView.move(dir);
         roomView.act();
+
+
         updateScore();
     }
 
@@ -98,10 +116,15 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
         roomView.setMaze(maze, new Coordinate(10, 10));
         roomView.setRoom(5, 5, -1);
 
+
+        joystickView = (JoystickView) findViewById(R.id.joystick);
+
+
         // On démarre le jeu !
         update();
     }
 
+   // public void onButtonClick(View view){
     // Création du score ---------------------------------------------------------------------- MADE BY #TeamCoupDeGriffe --------------------------------------
     void updateScore() {
 
@@ -109,28 +132,29 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
     }
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    public void onButtonClick(View view){
+//    public void onButtonClick(View view){
 
          // Détection de la direction choisie
-        int dir = -1;
-        switch (view.getId()){
-            case R.id.buttonRight :
-                dir = 0;
-                break;
-            case R.id.buttonDown :
-                dir = 1;
-                break;
-            case R.id.buttonLeft :
-                dir = 2;
-                break;
-            case R.id.buttonUp :
-                dir = 3;
-                break;
-        }
+       // int dir = -1;
+       // switch (view.getId()){
+         //   case R.id.buttonRight :
+               // dir = 0;
+              //  break;
+            //case R.id.buttonDown :
+            //    dir = 1;
+              //  break;
+            //case R.id.buttonLeft :
+             //   dir = 2;
+           //     break;
+         //   case R.id.buttonUp :
+        //        dir = 3;
+       //         break;
+     //   }
 
         // Demande le déplacement dans la direction
-        roomView.move(dir);
-    }
+    //    roomView.move(dir);
+   // }
+
 
 
     @Override
@@ -140,8 +164,6 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
         return true;
     }
 
-
-    // Recupere l'ID des objets toucher
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -156,4 +178,7 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
 
         return super.onOptionsItemSelected(item);
     }
+
 }
+
+
