@@ -218,6 +218,7 @@ public class RoomView extends View {
             canvas.drawBitmap(sprite.getBitmap(s.getSpriteId()), src,tmp,null);
         }
 
+
         // On restore la transformation originale.
         canvas.restore();
     }
