@@ -44,7 +44,8 @@
         android:layout_alignTop="@+id/buttonUp"
         android:layout_toRightOf="@+id/buttonDown"
         android:layout_toEndOf="@+id/buttonDown"
-        android:layout_alignBottom="@+id/buttonDown" />
+        android:layout_alignBottom="@+id/buttonDown"
+        android:layout_alignParentStart="false" />
 
     <Button
         android:layout_width="wrap_content"
