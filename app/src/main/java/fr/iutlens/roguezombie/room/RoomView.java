@@ -163,10 +163,15 @@ public class RoomView extends View {
         roomChanged = false;
         map.clear();
 
-        // Ajout d'un "monstre" à des coordonnées aléatoires
-        int xm = (int) (Math.random()*(coordinate.getWidth()-2))+1;
-        int ym = (int) (Math.random()*(coordinate.getHeight()-2))+1;
-        map.put(coordinate.getNdx(xm,ym),new FuyardSprite(xm,ym,4,this));
+        int z=0;
+        int k= (int) (Math.random() * (6 - 1) + 1);
+        while (z < k) {
+            z++;
+// Ajout d'un "monstre" à des coordonnées aléatoires
+            int xm = (int) (Math.random() * (coordinate.getWidth() - 2)) + 1;
+            int ym = (int) (Math.random() * (coordinate.getHeight() - 2)) + 1;
+            map.put(coordinate.getNdx(xm, ym), new FuyardSprite(xm, ym, 4, this));
+        }
 
         // Affichage des murs partout où il n'y a pas de porte.
         int door = maze.get(x,y);

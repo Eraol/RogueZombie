@@ -102,19 +102,19 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
         setContentView(R.layout.activity_main);
 
         // Création du layrinthe 10x10
-        coordinate = new Coordinate(10,10);
+        coordinate = new Coordinate(6,6);
         maze = new Maze(coordinate);
 
         // Configuration de la minimap
         miniMapView = (MiniMapView) findViewById(R.id.view);
         miniMapView.setMaze(maze);
-        maze.visit(coordinate.getNdx(5,5)); // On commence en 5x5
+        maze.visit(coordinate.getNdx(3,3)); // On commence en 5x5
 
         // Configuration de la salle
         roomView = (RoomView) findViewById(R.id.view2);
         roomView.setListener(this);
         roomView.setMaze(maze, new Coordinate(10, 10));
-        roomView.setRoom(5, 5, -1);
+        roomView.setRoom(3, 3, -1);
 
 
         joystickView = (JoystickView) findViewById(R.id.joystick);
