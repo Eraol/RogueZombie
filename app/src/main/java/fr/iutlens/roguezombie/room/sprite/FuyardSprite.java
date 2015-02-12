@@ -1,5 +1,6 @@
 package fr.iutlens.roguezombie.room.sprite;
 
+import fr.iutlens.roguezombie.maze.Maze;
 import fr.iutlens.roguezombie.room.RoomView;
 import fr.iutlens.roguezombie.util.Coordinate;
 
@@ -15,34 +16,32 @@ public class FuyardSprite extends MonsterSprite {
 
     @Override
     protected int chooseDir() {
-        int d = 0; ;
+        int d = 0;
 
         // - recuperer les coordonnes du héros
         HeroSprite hero = room.hero;
         hero.getX();
         hero.getY();
 
-        float coord = 0;
+        float ScoreCoord = 0;
 
         float dX, dY;
         dX = hero.getX() - getX();
         dY = hero.getY() - getY();
 
-
         float max=-1;
-
-
 
         for(int i=0; i<4; i++){
             // Calcul du produit scalaire
-            coord = -ProduitScalaire(dX, dY, Coordinate.DIR[i][0], Coordinate.DIR[i][1]);
+            ScoreCoord = -ProduitScalaire(dX, dY, Coordinate.DIR[i][0], Coordinate.DIR[i][1]);
 
-
-
-            if(coord > max) {
-                max=coord;
+            // teste si loin
+            if(room.isFree(x+Coordinate.DIR[i][0],y+Coordinate.DIR[i][1]))  {
+                    if(ScoreCoord > max) { // si possible et meilleur
+                max=ScoreCoord;
                 d=i;
             }
+        }
         }
 
         if (!room.isFree(x+Coordinate.DIR[d][0],y+Coordinate.DIR[d][1])) d = -1;
@@ -51,7 +50,7 @@ public class FuyardSprite extends MonsterSprite {
 
     /* Methode calcul produit scalaire */
     public float ProduitScalaire(float x, float y, float x2, float y2) {
-           float result;
+        float result;
         result = (x*x2)+(y*y2);
         return result;
     }

@@ -91,6 +91,8 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
         update();
     }
 
+
+
     public void onButtonClick(View view){
 
          // Détection de la direction choisie

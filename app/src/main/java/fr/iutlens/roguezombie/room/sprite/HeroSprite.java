@@ -9,6 +9,7 @@ import fr.iutlens.roguezombie.util.Coordinate;
 public class HeroSprite extends MonsterSprite {
 
     private int nextDir;
+    public int score=0;
 
     public HeroSprite(int x, int y, int id, RoomView room) {
         super(x, y, id, room);
@@ -60,6 +61,7 @@ public class HeroSprite extends MonsterSprite {
             //Si le sprite est un monstre alors le sprite est mort (Ne pas oublier ALT+Entree pour la méthode)
             if(sprite instanceof MonsterSprite) {
                 ((MonsterSprite)sprite).kill();
+                score++;
             }
             d = -1; // SI Il y a quelqchose on ce déplace pas.
         }
