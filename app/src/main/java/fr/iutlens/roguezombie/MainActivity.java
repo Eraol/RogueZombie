@@ -1,6 +1,5 @@
 package fr.iutlens.roguezombie;
 
-import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
@@ -27,7 +26,7 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
     private Coordinate coordinate;
     private RoomView roomView;
     private MiniMapView miniMapView;
-    private JoystickView JoystickView;
+    private JoystickView joystickView;
 
 
     @Override
@@ -69,8 +68,18 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
     private void update() {
         handler.sleep(40);
 
-    Log.d("Pad", "" + 2);
+    Log.d("Pad", "" + Math.round(joystickView.getRadial()));
+
+
+        int dir = (int) (4+Math.round(joystickView.getAngle()/(Math.PI/2)))%4;
+        int longueur = (int) Math.round(joystickView.getRadial());
+        if (longueur == 0) {
+            dir = -1;
+        }
+
+        roomView.move(dir);
         roomView.act();
+
 
     }
 
@@ -96,7 +105,7 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
         roomView.setRoom(5, 5, -1);
 
 
-        JoystickView = (JoystickView) findViewById(R.id.joystick);
+        joystickView = (JoystickView) findViewById(R.id.joystick);
 
 
         // On démarre le jeu !
@@ -125,9 +134,6 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
         // Demande le déplacement dans la direction
     //    roomView.move(dir);
    // }
-
-
-
 
 
 
