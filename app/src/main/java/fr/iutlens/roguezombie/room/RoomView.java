@@ -16,6 +16,7 @@ import java.util.Map;
 import fr.iutlens.roguezombie.R;
 import fr.iutlens.roguezombie.maze.Maze;
 import fr.iutlens.roguezombie.room.sprite.DecorSprite;
+import fr.iutlens.roguezombie.room.sprite.FuyardSprite;
 import fr.iutlens.roguezombie.room.sprite.HeroSprite;
 import fr.iutlens.roguezombie.room.sprite.MonsterSprite;
 import fr.iutlens.roguezombie.room.sprite.Sprite;
@@ -31,7 +32,7 @@ public class RoomView extends View {
     Coordinate coordinate;
 
     private Map<Integer,Sprite> map,next;
-    private HeroSprite hero;
+    public HeroSprite hero;
 
     private OnRoomOutListener listener;
 
@@ -45,8 +46,10 @@ public class RoomView extends View {
     static PaintFlagsDrawFilter setfil= new PaintFlagsDrawFilter(0,
             Paint.FILTER_BITMAP_FLAG | Paint.ANTI_ALIAS_FLAG);
     private Rect src;
+    private Rect src2;
 
     private SpriteSheet sprite;
+    private SpriteSheet spriteFond;
     private Paint paint;
 
     private int w,h,x,y,dir;
@@ -72,7 +75,9 @@ public class RoomView extends View {
         reverse = new Matrix();
 
         sprite = SpriteSheet.get(this.getContext(), R.drawable.sprite);
+        spriteFond = SpriteSheet.get(this.getContext(), R.drawable.sprite_fond);
         src = new Rect(0,0, sprite.w, sprite.h);
+        src2 = new Rect(0,0, spriteFond.w, spriteFond.h);
         tmp = new RectF();
 
         paint = new Paint();
@@ -105,7 +110,7 @@ public class RoomView extends View {
 
     /***
      * Anime la vue.
-     *
+     * <p/>
      * Tous les éléments avancent d'une étape.
      */
     public void act(){
@@ -114,10 +119,14 @@ public class RoomView extends View {
         if (roomChanged) setRoom();
 
         // Parcours de tous les sprites
-        for(Sprite sprite : map.values()) {
-            sprite.act(); // action
-            int ndx = sprite.getNdx(); // Prise en compte de la nouvelle position
-            next.put(ndx,sprite);
+        for (Sprite sprite : map.values()) {
+
+
+            if(!sprite.isDead()) {
+                sprite.act(); // action
+                int ndx = sprite.getNdx(); // Prise en compte de la nouvelle position
+                next.put(ndx, sprite);
+            }
         }
 
         // map <- next, et on recycle map pour limiter les instanciations inutiles.
@@ -157,7 +166,7 @@ public class RoomView extends View {
         // Ajout d'un "monstre" à des coordonnées aléatoires
         int xm = (int) (Math.random()*(coordinate.getWidth()-2))+1;
         int ym = (int) (Math.random()*(coordinate.getHeight()-2))+1;
-        map.put(coordinate.getNdx(xm,ym),new MonsterSprite(xm,ym,3,this));
+        map.put(coordinate.getNdx(xm,ym),new FuyardSprite(xm,ym,4,this));
 
         // Affichage des murs partout où il n'y a pas de porte.
         int door = maze.get(x,y);
@@ -208,7 +217,10 @@ public class RoomView extends View {
         canvas.concat(transform);
 
         //On peint le fond
-        canvas.drawRect(0,0,coordinate.getHeight(),coordinate.getHeight(),paint);
+        //canvas.drawRect(0,0,coordinate.getHeight(),coordinate.getHeight(),paint);
+        tmp.set(0,0,coordinate.getHeight(),coordinate.getHeight());
+        canvas.drawBitmap(spriteFond.getBitmap(0), src2,tmp,null);
+
 
         //On peint chacun des sprite
         for(Sprite s : map.values()){
@@ -217,6 +229,7 @@ public class RoomView extends View {
             tmp.set(i,j,i+1,j+1);
             canvas.drawBitmap(sprite.getBitmap(s.getSpriteId()), src,tmp,null);
         }
+
 
         // On restore la transformation originale.
         canvas.restore();
@@ -279,6 +292,20 @@ public class RoomView extends View {
         if (ndx == -1) return false;
 
         return map.get(ndx) == null && next.get(ndx) == null;
+    }
+
+    /*
+    CECI EST LA FONCTION PERMETTANT DE CONNAITRE LE TYPE DE L'OBJET TOUCHE
+     */
+
+    public Sprite getSprite(int x, int y) {
+        final int ndx = coordinate.getNdx(x, y);
+        if (ndx == -1) return null;
+        if (map.get(ndx) != null) {
+            return map.get(ndx);
+        } else {
+            return next.get(ndx);
+        }
     }
 
     /**

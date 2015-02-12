@@ -1,5 +1,6 @@
 package fr.iutlens.roguezombie;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
@@ -8,6 +9,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
 
@@ -19,7 +23,7 @@ import fr.iutlens.roguezombie.joystick.JoystickView;
 import fr.iutlens.roguezombie.util.Coordinate;
 
 
-public class MainActivity extends ActionBarActivity implements OnRoomOutListener {
+public class  MainActivity extends ActionBarActivity implements OnRoomOutListener {
 
 
     private Maze maze;
@@ -27,6 +31,7 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
     private RoomView roomView;
     private MiniMapView miniMapView;
     private JoystickView joystickView;
+    private int score;
 
 
     @Override
@@ -81,11 +86,18 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
         roomView.act();
 
 
+        updateScore();
     }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Remove title bar
+
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //Remove notification bar
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -113,6 +125,14 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
     }
 
    // public void onButtonClick(View view){
+    // Création du score ---------------------------------------------------------------------- MADE BY #TeamCoupDeGriffe --------------------------------------
+    void updateScore() {
+
+        ((TextView) findViewById(R.id.scoreView)).setText("Cerveaux : " + roomView.hero.score);
+    }
+    //-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public void onButtonClick(View view){
 
          // Détection de la direction choisie
        // int dir = -1;

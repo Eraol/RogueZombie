@@ -38,4 +38,9 @@ public class DecorSprite implements Sprite {
     public int getNdx() {
         return ndx;
     }
+
+    @Override
+    public boolean isDead() {
+        return false;
+    }
 }
