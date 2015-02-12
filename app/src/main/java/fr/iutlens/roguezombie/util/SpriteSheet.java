@@ -28,7 +28,7 @@ public class SpriteSheet {
 		
 		map.put(R.drawable.room, new SpriteSheet(4,4));
 
-        map.put(R.drawable.sprite, new SpriteSheet(2,2));
+        map.put(R.drawable.sprite, new SpriteSheet(2,4));
 
 
 		

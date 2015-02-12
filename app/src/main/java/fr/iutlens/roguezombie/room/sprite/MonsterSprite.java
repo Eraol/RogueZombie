@@ -64,6 +64,9 @@ public class MonsterSprite implements Sprite {
 
     @Override
     public int getSpriteId() {
+        if (dir==2) {
+            return id+1;
+        }
         return id;
     }
 
