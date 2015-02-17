@@ -75,7 +75,7 @@ public class RoomView extends View {
         reverse = new Matrix();
 
         sprite = SpriteSheet.get(this.getContext(), R.drawable.sprite);
-        spriteFond = SpriteSheet.get(this.getContext(), R.drawable.sprite_fond);
+        spriteFond = SpriteSheet.get(this.getContext(), R.drawable.sprite_fond_2);
         src = new Rect(0,0, sprite.w, sprite.h);
         src2 = new Rect(0,0, spriteFond.w, spriteFond.h);
         tmp = new RectF();
