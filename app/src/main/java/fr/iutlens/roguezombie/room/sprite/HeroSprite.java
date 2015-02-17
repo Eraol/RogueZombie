@@ -63,7 +63,7 @@ public class HeroSprite extends MonsterSprite {
             //Si le sprite est un monstre alors le sprite est mort (Ne pas oublier ALT+Entree pour la méthode)
             if(sprite instanceof MonsterSprite) {
                 ((MonsterSprite)sprite).kill();
-                score = score+1;
+                score++;
             }
             d = -1; // SI Il y a quelqchose on ce déplace pas.
         }
