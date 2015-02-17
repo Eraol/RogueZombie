@@ -31,7 +31,7 @@ public class RoomView extends View {
     Maze maze;
     Coordinate coordinate;
 
-    private Map<Integer, Sprite> map, next;
+    private Map<Integer,Sprite> map,next;
     public HeroSprite hero;
 
     private OnRoomOutListener listener;
@@ -46,8 +46,10 @@ public class RoomView extends View {
     static PaintFlagsDrawFilter setfil= new PaintFlagsDrawFilter(0,
             Paint.FILTER_BITMAP_FLAG | Paint.ANTI_ALIAS_FLAG);
     private Rect src;
+    private Rect src2;
 
     private SpriteSheet sprite;
+    private SpriteSheet spriteFond;
     private Paint paint;
 
     private int w,h,x,y,dir;
@@ -73,7 +75,9 @@ public class RoomView extends View {
         reverse = new Matrix();
 
         sprite = SpriteSheet.get(this.getContext(), R.drawable.sprite);
+        spriteFond = SpriteSheet.get(this.getContext(), R.drawable.sprite_fond);
         src = new Rect(0,0, sprite.w, sprite.h);
+        src2 = new Rect(0,0, spriteFond.w, spriteFond.h);
         tmp = new RectF();
 
         paint = new Paint();
@@ -213,7 +217,10 @@ public class RoomView extends View {
         canvas.concat(transform);
 
         //On peint le fond
-        canvas.drawRect(0,0,coordinate.getHeight(),coordinate.getHeight(),paint);
+        //canvas.drawRect(0,0,coordinate.getHeight(),coordinate.getHeight(),paint);
+        tmp.set(0,0,coordinate.getHeight(),coordinate.getHeight());
+        canvas.drawBitmap(spriteFond.getBitmap(0), src2,tmp,null);
+
 
         //On peint chacun des sprite
         for(Sprite s : map.values()){
@@ -306,7 +313,9 @@ public class RoomView extends View {
      *
      * @param dir
      */
+
     public void move(int dir) {
-        hero.setDir(dir);
+        if (hero != null)
+            hero.setDir(dir);
     }
 }
