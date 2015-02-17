@@ -63,6 +63,8 @@ public class HeroSprite extends MonsterSprite {
             Sprite sprite = room.getSprite(xSprite, ySprite); // TODO Le combat
 
 
+
+
             //Si le sprite est un monstre alors le sprite est mort (Ne pas oublier ALT+Entree pour la méthode)
             if(sprite instanceof MonsterSprite) {
                 ((MonsterSprite)sprite).kill();
