@@ -73,8 +73,6 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
     private void update() {
         handler.sleep(40);
 
-    Log.d("Pad", "" + Math.round(joystickView.getRadial()));
-
 
         int dir = (int) (4+Math.round(joystickView.getAngle()/(Math.PI/2)))%4;
         int longueur = (int) Math.round(joystickView.getRadial());
