@@ -1,11 +1,17 @@
 package fr.iutlens.roguezombie;
 
 import android.os.Bundle;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.app.ActionBarActivity;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,8 +36,9 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
     private Coordinate coordinate;
     private RoomView roomView;
     private MiniMapView miniMapView;
-    private JoystickView joystickView;
     private int score;
+    private JoystickView joystickView;
+
 
 
     @Override
@@ -84,7 +91,6 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
 
         roomView.move(dir);
         roomView.act();
-
 
         updateScore();
     }
@@ -163,6 +169,7 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

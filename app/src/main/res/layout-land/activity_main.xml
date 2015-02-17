@@ -11,7 +11,6 @@
         class="fr.iutlens.roguezombie.maze.MiniMapView"
         android:id="@+id/view"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/scoreView"
         android:layout_alignLeft="@+id/joystick"
         android:layout_alignStart="@+id/joystick" />
 
@@ -20,10 +19,11 @@
         android:layout_height="wrap_content"
         class="fr.iutlens.roguezombie.room.RoomView"
         android:id="@+id/view2"
-        android:layout_below="@+id/view"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_above="@+id/joystick" />
+        android:layout_toLeftOf="@+id/view"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/scoreView"
+        android:layout_toEndOf="@+id/scoreView" />
 
     <view
         android:layout_width="120dp"
@@ -45,6 +45,5 @@
         android:layout_alignParentStart="true"
         android:textSize="30sp"
         />
-
 
 </RelativeLayout>
