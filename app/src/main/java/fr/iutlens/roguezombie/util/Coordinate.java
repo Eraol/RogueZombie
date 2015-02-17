@@ -5,7 +5,15 @@ package fr.iutlens.roguezombie.util;
  */
 public class Coordinate {
 
-    public static int[][] DIR = {{1,0},{0,1},{-1,0},{0,-1}};
+    public static int[][] DIR4 = {{1,0},
+                                {0,1},
+                                {-1,0},
+                                {0,-1}};
+
+    public static int[][] DIR8 = {{1,0},{1,1},
+                                  {0,1},{-1,1},
+                                  {-1,0},{-1,-1},
+                                  {0,-1},{1,-1}};
 
     int width,height;
 
@@ -43,7 +51,7 @@ public class Coordinate {
 
     public int getNext(int ndx, int dir){
         return getNdx(
-                getI(ndx)+DIR[dir][0],
-                getJ(ndx)+DIR[dir][1]);
+                getI(ndx)+ DIR4[dir][0],
+                getJ(ndx)+ DIR4[dir][1]);
     }
 }

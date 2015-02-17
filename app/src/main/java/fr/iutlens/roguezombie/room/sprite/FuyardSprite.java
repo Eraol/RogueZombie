@@ -1,6 +1,5 @@
 package fr.iutlens.roguezombie.room.sprite;
 
-import fr.iutlens.roguezombie.maze.Maze;
 import fr.iutlens.roguezombie.room.RoomView;
 import fr.iutlens.roguezombie.util.Coordinate;
 
@@ -33,10 +32,10 @@ public class FuyardSprite extends MonsterSprite {
 
         for(int i=0; i<4; i++){
             // Calcul du produit scalaire
-            ScoreCoord = -ProduitScalaire(dX, dY, Coordinate.DIR[i][0], Coordinate.DIR[i][1]);
+            ScoreCoord = -ProduitScalaire(dX, dY, Coordinate.DIR4[i][0], Coordinate.DIR4[i][1]);
 
             // teste si loin
-            if(room.isFree(x+Coordinate.DIR[i][0],y+Coordinate.DIR[i][1]))  {
+            if(room.isFree(x+Coordinate.DIR4[i][0],y+Coordinate.DIR4[i][1]))  {
                     if(ScoreCoord > max) { // si possible et meilleur
                 max=ScoreCoord;
                 d=i;
@@ -44,7 +43,7 @@ public class FuyardSprite extends MonsterSprite {
         }
         }
 
-        if (!room.isFree(x+Coordinate.DIR[d][0],y+Coordinate.DIR[d][1])) d = -1;
+        if (!room.isFree(x+Coordinate.DIR4[d][0],y+Coordinate.DIR4[d][1])) d = -1;
         return d;
     }
 
