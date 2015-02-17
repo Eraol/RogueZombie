@@ -147,7 +147,7 @@ public class RoomView extends View {
      * @param y
      * @param dir
      */
-    public void setRoom(int x,int y, int dir) {
+    public void setRoom(int x, int y, int dir) {
         this.x = x;
         this.y = y;
         this.dir = dir;
@@ -158,6 +158,7 @@ public class RoomView extends View {
 
     /***
      * Réalise le changement de salle demandé précédemment.
+
      */
     private void setRoom(){
         roomChanged = false;
@@ -165,13 +166,23 @@ public class RoomView extends View {
 
         int z=0;
         int k= (int) (Math.random() * (6 - 1) + 1);
+        //sauvegarder k => dans nbmonstre
         while (z < k) {
             z++;
-// Ajout d'un "monstre" à des coordonnées aléatoires
+            // Ajout d'un "monstre" à des coordonnées aléatoires
             int xm = (int) (Math.random() * (coordinate.getWidth() - 2)) + 1;
             int ym = (int) (Math.random() * (coordinate.getHeight() - 2)) + 1;
             map.put(coordinate.getNdx(xm, ym), new FuyardSprite(xm, ym, 4, this));
         }
+
+       /* if (maze.caseVisite(x,y)) {
+        }*/
+
+
+
+
+
+
 
         // Affichage des murs partout où il n'y a pas de porte.
         int door = maze.get(x,y);

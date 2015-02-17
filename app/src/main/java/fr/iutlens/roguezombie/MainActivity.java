@@ -39,9 +39,14 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
         //Calcul de la prochaine salle dans la direction indiquée
         int ndx = coordinate.getNext(coordinate.getNdx(x, y), dir);
 
+       dir = maze.caseVisite(x, y);
+
+
         //mise à jour de la minimap
         maze.visit(ndx);
         miniMapView.invalidate();
+
+
 
         //mise à jour de la salle affichée
         roomView.setRoom(coordinate.getI(ndx), coordinate.getJ(ndx), dir);

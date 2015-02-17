@@ -16,6 +16,9 @@ public class Maze {
     private int[] door; // combinaison de bits = 0..3 porte dans la direction ; 4 déjà visité
     private int last; // dernière case visitée
 
+    public int[] nbMonstres; // tab reste monstres
+
+
     public int getLast() {
         return last;
     }
@@ -26,6 +29,11 @@ public class Maze {
 
     public int get(int i, int j){
         return door[coordinate.getNdx(i,j)];
+    }
+
+
+    public int getMonstre(int x){
+        return nbMonstres[x];
     }
 
     /***
@@ -50,7 +58,16 @@ public class Maze {
         if (ndx<0) return;
         last = ndx;
         door[ndx] |= 16;
+
     }
+
+    /* boolean case visite ou pas */
+    public int caseVisite(int i, int j) {
+        int d = door[coordinate.getNdx(i,j)];
+        if ((d & 16) ==0) return 0;
+        return 1;
+    }
+
 
     /***
      * Construit le labyrinthe.
@@ -65,6 +82,8 @@ public class Maze {
         // instanciations
 
         door = new int[coordinate.getSize()];
+        nbMonstres = new int[coordinate.getSize()];
+
 
         Set<Integer> done, todo;
 
