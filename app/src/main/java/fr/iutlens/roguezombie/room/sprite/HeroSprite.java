@@ -1,5 +1,6 @@
 package fr.iutlens.roguezombie.room.sprite;
 
+import fr.iutlens.roguezombie.MainActivity;
 import fr.iutlens.roguezombie.room.RoomView;
 import fr.iutlens.roguezombie.util.Coordinate;
 

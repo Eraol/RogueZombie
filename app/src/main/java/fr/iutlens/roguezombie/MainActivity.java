@@ -1,11 +1,17 @@
 package fr.iutlens.roguezombie;
 
 import android.os.Bundle;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.app.ActionBarActivity;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,8 +36,9 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
     private Coordinate coordinate;
     private RoomView roomView;
     private MiniMapView miniMapView;
-    private JoystickView joystickView;
     private int score;
+    private JoystickView joystickView;
+
 
 
     @Override
@@ -83,7 +90,6 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
         roomView.move(dir);
         roomView.act();
 
-
         updateScore();
     }
 
@@ -100,19 +106,19 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
         setContentView(R.layout.activity_main);
 
         // Création du layrinthe 10x10
-        coordinate = new Coordinate(10,10);
+        coordinate = new Coordinate(6,6);
         maze = new Maze(coordinate);
 
         // Configuration de la minimap
         miniMapView = (MiniMapView) findViewById(R.id.view);
         miniMapView.setMaze(maze);
-        maze.visit(coordinate.getNdx(5,5)); // On commence en 5x5
+        maze.visit(coordinate.getNdx(3,3)); // On commence en 5x5
 
         // Configuration de la salle
         roomView = (RoomView) findViewById(R.id.view2);
         roomView.setListener(this);
         roomView.setMaze(maze, new Coordinate(10, 10));
-        roomView.setRoom(5, 5, -1);
+        roomView.setRoom(3, 3, -1);
 
 
         joystickView = (JoystickView) findViewById(R.id.joystick);
@@ -161,6 +167,7 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
