@@ -82,7 +82,7 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
 
 
 
-        int dir = (int) (4+Math.round(joystickView.getAngle()/(Math.PI/2)))%4;
+        int dir = (int) (8+Math.round(joystickView.getAngle()/(Math.PI/4)))%8;
         int longueur = (int) Math.round(joystickView.getRadial());
         if (longueur == 0) {
             dir = -1;

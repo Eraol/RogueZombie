@@ -32,8 +32,8 @@ public class MonsterSprite implements Sprite {
         if (progress>1){ // On vient d'atteindre une nouvelle case.
             progress = 0;
             if (dir != -1){ // Si on bougeait
-                x+= Coordinate.DIR[dir][0];
-                y+= Coordinate.DIR[dir][1];
+                x+= Coordinate.DIR8[dir][0];
+                y+= Coordinate.DIR8[dir][1];
                 
                 onMoved(); // Appel d'un écouteur, conçu pour les descendants de cette classe.
             }
@@ -42,7 +42,7 @@ public class MonsterSprite implements Sprite {
 
             // Mise à jour du numéro de case (en cas de mouvement)
             if (dir != -1){
-                ndx = room.getCoordinate().getNdx(x + Coordinate.DIR[dir][0], y + Coordinate.DIR[dir][1]);
+                ndx = room.getCoordinate().getNdx(x + Coordinate.DIR8[dir][0], y + Coordinate.DIR8[dir][1]);
             }
         }
     }
@@ -56,8 +56,8 @@ public class MonsterSprite implements Sprite {
      * @return
      */
     protected int chooseDir() {
-        int d = (int) (Math.random()*4);
-        if (!room.isFree(x+Coordinate.DIR[d][0],y+Coordinate.DIR[d][1])) d = -1;
+        int d = (int) (Math.random()*8);
+        if (!room.isFree(x+Coordinate.DIR8[d][0],y+Coordinate.DIR8[d][1])) d = -1;
 
         return d;
     }
@@ -73,13 +73,13 @@ public class MonsterSprite implements Sprite {
     @Override
     public float getX() {
         if (dir == -1) return x;
-        return x+progress*Coordinate.DIR[dir][0];
+        return x+progress*Coordinate.DIR8[dir][0];
     }
 
     @Override
     public float getY() {
         if (dir == -1) return y;
-        return y+progress*Coordinate.DIR[dir][1];
+        return y+progress*Coordinate.DIR8[dir][1];
     }
 
     @Override
