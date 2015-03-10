@@ -87,7 +87,7 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
             dir = -1;
         }
 
-        roomView.move(dir);
+        roomView.move((float) joystickView.getAngle());
         roomView.act();
 
         updateScore();
