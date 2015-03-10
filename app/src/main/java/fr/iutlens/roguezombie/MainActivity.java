@@ -93,6 +93,7 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
         roomView.act();
 
         updateScore();
+        updateVie();
     }
 
 
@@ -137,6 +138,13 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
         ((TextView) findViewById(R.id.scoreView)).setText("Cerveaux : " + roomView.hero.score);
     }
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    //Création point de vie----------------------------------------------------------------------MADE BY #TeamCoupDeGriffe-----------------------------------------
+    void updateVie(){
+        ((TextView) findViewById(R.id.vieView)).setText("Vies : " + roomView.hero.vie);
+
+    }
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //    public void onButtonClick(View view){
 

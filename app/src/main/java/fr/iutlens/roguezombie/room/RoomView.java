@@ -17,6 +17,7 @@ import java.util.Map;
 import fr.iutlens.roguezombie.R;
 import fr.iutlens.roguezombie.maze.Maze;
 import fr.iutlens.roguezombie.room.sprite.DecorSprite;
+import fr.iutlens.roguezombie.room.sprite.EnnemiSprite;
 import fr.iutlens.roguezombie.room.sprite.FuyardSprite;
 import fr.iutlens.roguezombie.room.sprite.HeroSprite;
 import fr.iutlens.roguezombie.room.sprite.Sprite;
@@ -170,7 +171,12 @@ public class RoomView extends View {
 // Ajout d'un "monstre" à des coordonnées aléatoires
             int xm = (int) (Math.random() * (coordinate.getWidth() - 2)) + 1;
             int ym = (int) (Math.random() * (coordinate.getHeight() - 2)) + 1;
-            map.put(coordinate.getNdx(xm, ym), new FuyardSprite(xm, ym, 4, this));
+            if (Math.random() < 0.3) {
+                map.put(coordinate.getNdx(xm, ym), new EnnemiSprite(xm, ym, 6, this));
+            } else {
+                map.put(coordinate.getNdx(xm, ym), new FuyardSprite(xm, ym, 4, this));
+
+            }
         }
 
         // Affichage des murs partout où il n'y a pas de porte.
