@@ -20,7 +20,6 @@ import fr.iutlens.roguezombie.room.sprite.DecorSprite;
 import fr.iutlens.roguezombie.room.sprite.EnnemiSprite;
 import fr.iutlens.roguezombie.room.sprite.FuyardSprite;
 import fr.iutlens.roguezombie.room.sprite.HeroSprite;
-import fr.iutlens.roguezombie.room.sprite.MonsterSprite;
 import fr.iutlens.roguezombie.room.sprite.Sprite;
 import fr.iutlens.roguezombie.util.Coordinate;
 import fr.iutlens.roguezombie.util.SpriteSheet;
@@ -77,7 +76,7 @@ public class RoomView extends View {
         reverse = new Matrix();
 
         sprite = SpriteSheet.get(this.getContext(), R.drawable.sprite);
-        spriteFond = SpriteSheet.get(this.getContext(), R.drawable.sprite_fond);
+        spriteFond = SpriteSheet.get(this.getContext(), R.drawable.sprite_carrelage);
         src = new Rect(0,0, sprite.w, sprite.h);
         src2 = new Rect(0,0, spriteFond.w, spriteFond.h);
         tmp = new RectF();
@@ -180,18 +179,21 @@ public class RoomView extends View {
             }
         }
 
-        // Affichage des murs partout où il n'y a pas de porte.
+        int xm = (int) (Math.random() * (coordinate.getWidth() - 2));
+        int ym = (int) (Math.random() * (coordinate.getHeight() - 2));
+       // map.put(coordinate.getNdx(xm, ym), new DecorSprite(xm,ym, 4,this));
+                // Affichage des murs partout où il n'y a pas de porte.
         int door = maze.get(x,y);
         int p =1;
         for(int i = 0; i <4; ++i){ // Pour chacune des 4 directions
   //          if ((door & p)==0){ // Si il y a un mur
                 // Calcul d'un des coin (a,b)
-                int a = (coordinate.DIR[i][0]+coordinate.DIR[(i+1)&3][0]+1)*(coordinate.getWidth()-1)/2;
-                int b = (coordinate.DIR[i][1]+coordinate.DIR[(i+1)&3][1]+1)*(coordinate.getHeight()-1)/2;
+                int a = (coordinate.DIR4[i][0]+coordinate.DIR4[(i+1)&3][0]+1)*(coordinate.getWidth()-1)/2;
+                int b = (coordinate.DIR4[i][1]+coordinate.DIR4[(i+1)&3][1]+1)*(coordinate.getHeight()-1)/2;
 
                 // Calcul de la direction (da,db) dans laquelle construire le mur
-                int da = coordinate.DIR[(i+3)&3][0];
-                int db = coordinate.DIR[(i+3)&3][1];
+                int da = coordinate.DIR4[(i+3)&3][0];
+                int db = coordinate.DIR4[(i+3)&3][1];
 
 
             // ajout d'un compteur de case
