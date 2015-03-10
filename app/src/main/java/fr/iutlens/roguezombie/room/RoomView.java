@@ -20,7 +20,6 @@ import fr.iutlens.roguezombie.room.sprite.DecorSprite;
 import fr.iutlens.roguezombie.room.sprite.EnnemiSprite;
 import fr.iutlens.roguezombie.room.sprite.FuyardSprite;
 import fr.iutlens.roguezombie.room.sprite.HeroSprite;
-import fr.iutlens.roguezombie.room.sprite.MonsterSprite;
 import fr.iutlens.roguezombie.room.sprite.Sprite;
 import fr.iutlens.roguezombie.util.Coordinate;
 import fr.iutlens.roguezombie.util.SpriteSheet;
@@ -186,12 +185,12 @@ public class RoomView extends View {
         for(int i = 0; i <4; ++i){ // Pour chacune des 4 directions
   //          if ((door & p)==0){ // Si il y a un mur
                 // Calcul d'un des coin (a,b)
-                int a = (coordinate.DIR[i][0]+coordinate.DIR[(i+1)&3][0]+1)*(coordinate.getWidth()-1)/2;
-                int b = (coordinate.DIR[i][1]+coordinate.DIR[(i+1)&3][1]+1)*(coordinate.getHeight()-1)/2;
+                int a = (coordinate.DIR4[i][0]+coordinate.DIR4[(i+1)&3][0]+1)*(coordinate.getWidth()-1)/2;
+                int b = (coordinate.DIR4[i][1]+coordinate.DIR4[(i+1)&3][1]+1)*(coordinate.getHeight()-1)/2;
 
                 // Calcul de la direction (da,db) dans laquelle construire le mur
-                int da = coordinate.DIR[(i+3)&3][0];
-                int db = coordinate.DIR[(i+3)&3][1];
+                int da = coordinate.DIR4[(i+3)&3][0];
+                int db = coordinate.DIR4[(i+3)&3][1];
 
 
             // ajout d'un compteur de case
