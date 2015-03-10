@@ -76,7 +76,7 @@ public class RoomView extends View {
         reverse = new Matrix();
 
         sprite = SpriteSheet.get(this.getContext(), R.drawable.sprite);
-        spriteFond = SpriteSheet.get(this.getContext(), R.drawable.sprite_fond);
+        spriteFond = SpriteSheet.get(this.getContext(), R.drawable.sprite_carrelage);
         src = new Rect(0,0, sprite.w, sprite.h);
         src2 = new Rect(0,0, spriteFond.w, spriteFond.h);
         tmp = new RectF();
@@ -179,7 +179,10 @@ public class RoomView extends View {
             }
         }
 
-        // Affichage des murs partout où il n'y a pas de porte.
+        int xm = (int) (Math.random() * (coordinate.getWidth() - 2));
+        int ym = (int) (Math.random() * (coordinate.getHeight() - 2));
+       // map.put(coordinate.getNdx(xm, ym), new DecorSprite(xm,ym, 4,this));
+                // Affichage des murs partout où il n'y a pas de porte.
         int door = maze.get(x,y);
         int p =1;
         for(int i = 0; i <4; ++i){ // Pour chacune des 4 directions
