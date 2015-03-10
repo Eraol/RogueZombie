@@ -179,11 +179,6 @@ public class RoomView extends View {
         }*/
 
 
-
-
-
-
-
         // Affichage des murs partout où il n'y a pas de porte.
         int door = maze.get(x,y);
         int p =1;
