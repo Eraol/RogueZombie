@@ -31,20 +31,6 @@ public class EnnemiSprite extends MonsterSprite {
 
         float max=-1;
 
-//      Ancienne gestion du déplacement de l'ennemi rouge
-//        for(int i=0; i<8; i++){
-//            // Calcul du produit scalaire
-//            ScoreCoord = ProduitScalaire(dX, dY, Coordinate.DIR8[i][0], Coordinate.DIR8[i][1]);
-//
-//            // teste si loin
-//            if(room.isFree(x+Coordinate.DIR8[i][0],y+Coordinate.DIR8[i][1]))  {
-//                if(ScoreCoord > max) { // si possible et meilleur
-//                    max=ScoreCoord;
-//                    d=i;
-//                }
-//            }
-//        }
-
         for(int i=0; i<8; i++){
             // Calcul du produit scalaire
             ScoreCoord = ProduitScalaire(dX, dY, Coordinate.DIR8[i][0], Coordinate.DIR8[i][1]);
