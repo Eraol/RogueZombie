@@ -31,15 +31,37 @@ public class EnnemiSprite extends MonsterSprite {
 
         float max=-1;
 
+//        for(int i=0; i<8; i++){
+//            // Calcul du produit scalaire
+//            ScoreCoord = ProduitScalaire(dX, dY, Coordinate.DIR8[i][0], Coordinate.DIR8[i][1]);
+//
+//            // teste si loin
+//            if(room.isFree(x+Coordinate.DIR8[i][0],y+Coordinate.DIR8[i][1]))  {
+//                if(ScoreCoord > max) { // si possible et meilleur
+//                    max=ScoreCoord;
+//                    d=i;
+//                }
+//            }
+//        }
+
         for(int i=0; i<8; i++){
             // Calcul du produit scalaire
             ScoreCoord = ProduitScalaire(dX, dY, Coordinate.DIR8[i][0], Coordinate.DIR8[i][1]);
 
+            int xSprite = x+Coordinate.DIR8[i][0];
+            int ySprite = y+Coordinate.DIR8[i][1];
+
             // teste si loin
-            if(room.isFree(x+Coordinate.DIR8[i][0],y+Coordinate.DIR8[i][1]))  {
+            if(room.isFree(xSprite, ySprite))  {
                 if(ScoreCoord > max) { // si possible et meilleur
                     max=ScoreCoord;
                     d=i;
+                }
+            } else {
+                Sprite sprite = room.getSprite(xSprite, ySprite);
+                if(sprite instanceof HeroSprite) {
+                    ((HeroSprite)sprite).hit();
+                   return -1;
                 }
             }
         }
