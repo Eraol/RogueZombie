@@ -1,6 +1,5 @@
 package fr.iutlens.roguezombie.room.sprite;
 
-import fr.iutlens.roguezombie.MainActivity;
 import fr.iutlens.roguezombie.room.RoomView;
 import fr.iutlens.roguezombie.util.Coordinate;
 
@@ -34,14 +33,14 @@ public class HeroSprite extends MonsterSprite {
         //Si oui, et si une action est prévue dans ce cas...
         if (outDir != -1 && room.getListener() != null) {
             // Calcul de la position dans la nouvelle salle (+2 fois la direction, modulo la taille de la salle)
-            x = (x + room.getCoordinate().getWidth() + Coordinate.DIR[dir][0] * 2) % room.getCoordinate().getWidth();
-            y = (y + room.getCoordinate().getHeight() + Coordinate.DIR[dir][1] * 2) % room.getCoordinate().getHeight();
+            x = (x + room.getCoordinate().getWidth() + Coordinate.DIR4[outDir][0] * 2) % room.getCoordinate().getWidth();
+            y = (y + room.getCoordinate().getHeight() + Coordinate.DIR4[outDir][1] * 2) % room.getCoordinate().getHeight();
             ndx = room.getCoordinate().getNdx(x, y);
 
             // Lance l'action de sortie de salle.
             int ndx = room.getMaze().getLast();
             room.getListener().onRoomOut(room.getMaze().coordinate.getI(ndx),
-                    room.getMaze().coordinate.getJ(ndx), dir);
+                    room.getMaze().coordinate.getJ(ndx), outDir);
         }
     }
 
@@ -57,8 +56,8 @@ public class HeroSprite extends MonsterSprite {
 
         if(d==-1){return d;}
 
-        int xSprite = x + Coordinate.DIR[d][0];
-        int ySprite = y + Coordinate.DIR[d][1];
+        int xSprite = x + Coordinate.DIR8[d][0];
+        int ySprite = y + Coordinate.DIR8[d][1];
         if (d != -1 && !room.isFree(xSprite, ySprite)) {
             Sprite sprite = room.getSprite(xSprite, ySprite); // TODO Le combat
 

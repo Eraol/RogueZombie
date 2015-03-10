@@ -83,7 +83,7 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
         countDown = countDown-40;
         if(countDown>0) {
             handler.sleep(40);
-            int dir = (int) (4 + Math.round(joystickView.getAngle() / (Math.PI / 2))) % 4;
+            int dir = (int) (8+Math.round(joystickView.getAngle()/(Math.PI/4)))%8;
             int longueur = (int) Math.round(joystickView.getRadial());
             if (longueur == 0) {
                 dir = -1;
@@ -91,6 +91,7 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
 
             roomView.move(dir);
             roomView.act();
+
 
             updateScore();
             updateVie();
