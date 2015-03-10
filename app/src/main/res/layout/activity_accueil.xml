@@ -1,0 +1,45 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="fr.iutlens.roguezombie.Accueil"
+    android:orientation="vertical"
+    android:background="#000000"
+    android:id="@+id/">
+
+    <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton"
+        android:background="@drawable/sprite_accueil"
+        android:layout_weight="0.2"
+        android:clickable="true" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/button"
+        android:layout_weight="0.9"
+        android:clickable="true"
+        android:text="Classement"
+        android:textColor="#751303"
+        android:background="#A09FA2"
+        android:layout_margin="1dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Régles"
+        android:id="@+id/button2"
+        android:layout_weight="0.9"
+        android:clickable="true"
+        android:textColor="#751303"
+        android:background="#A09FA2"
+        android:layout_margin="1dp" />
+
+</LinearLayout>
