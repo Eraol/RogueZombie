@@ -31,12 +31,12 @@ public class EnnemiSprite extends MonsterSprite {
 
         float max=-1;
 
-        for(int i=0; i<4; i++){
+        for(int i=0; i<8; i++){
             // Calcul du produit scalaire
-            ScoreCoord = ProduitScalaire(dX, dY, Coordinate.DIR[i][0], Coordinate.DIR[i][1]);
+            ScoreCoord = ProduitScalaire(dX, dY, Coordinate.DIR8[i][0], Coordinate.DIR8[i][1]);
 
             // teste si loin
-            if(room.isFree(x+Coordinate.DIR[i][0],y+Coordinate.DIR[i][1]))  {
+            if(room.isFree(x+Coordinate.DIR8[i][0],y+Coordinate.DIR8[i][1]))  {
                 if(ScoreCoord > max) { // si possible et meilleur
                     max=ScoreCoord;
                     d=i;
@@ -45,7 +45,7 @@ public class EnnemiSprite extends MonsterSprite {
         }
 
 
-        if (!room.isFree(x+Coordinate.DIR[d][0],y+Coordinate.DIR[d][1])) d = -1;
+        if (!room.isFree(x+Coordinate.DIR8[d][0],y+Coordinate.DIR8[d][1])) d = -1;
         return d;
     }
 
