@@ -1,5 +1,7 @@
 package fr.iutlens.roguezombie;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.content.Intent;
 import android.os.Handler;
@@ -38,8 +40,8 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
     private MiniMapView miniMapView;
     private int score;
     private JoystickView joystickView;
-
-
+    private long countDown;
+    private boolean running;
 
     @Override
     public void onRoomOut( int x, int y, int dir) {
@@ -78,21 +80,40 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
     private RefreshHandler handler = new RefreshHandler(this);
 
     private void update() {
-        handler.sleep(40);
+        countDown = countDown-40;
+        if(countDown>0) {
+            handler.sleep(40);
+            int dir = (int) (4 + Math.round(joystickView.getAngle() / (Math.PI / 2))) % 4;
+            int longueur = (int) Math.round(joystickView.getRadial());
+            if (longueur == 0) {
+                dir = -1;
+            }
 
+            roomView.move(dir);
+            roomView.act();
 
-
-        int dir = (int) (4+Math.round(joystickView.getAngle()/(Math.PI/2)))%4;
-        int longueur = (int) Math.round(joystickView.getRadial());
-        if (longueur == 0) {
-            dir = -1;
+            updateScore();
+            updateVie();
+            updateCountDown();
         }
-
-        roomView.move(dir);
-        roomView.act();
-
-        updateScore();
-        updateVie();
+        else{
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle("Votre score")
+                    .setMessage("Votre score est de "+roomView.hero.score+", voulez vous recommencer ?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            startGame();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            MainActivity.this.finish();
+                           //TODO ICI TU RENVOIS VERS LE MENU
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
     }
 
 
@@ -109,28 +130,29 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
 
         // Création du layrinthe 10x10
         coordinate = new Coordinate(6,6);
-        maze = new Maze(coordinate);
 
-        // Configuration de la minimap
         miniMapView = (MiniMapView) findViewById(R.id.view);
+        roomView = (RoomView) findViewById(R.id.view2);
+        roomView.setListener(this);
+        joystickView = (JoystickView) findViewById(R.id.joystick);
+        startGame();
+    }
+
+    private void startGame() {
+        maze = new Maze(coordinate);
+        // Configuration de la minimap
         miniMapView.setMaze(maze);
         maze.visit(coordinate.getNdx(3,3)); // On commence en 5x5
 
         // Configuration de la salle
-        roomView = (RoomView) findViewById(R.id.view2);
-        roomView.setListener(this);
         roomView.setMaze(maze, new Coordinate(10, 10));
         roomView.setRoom(3, 3, -1);
-
-
-        joystickView = (JoystickView) findViewById(R.id.joystick);
-
-
+        countDown=60*2*1000; // ICI TU MODIFIE LE TEMPS
         // On démarre le jeu !
         update();
     }
 
-   // public void onButtonClick(View view){
+    // public void onButtonClick(View view){
     // Création du score ---------------------------------------------------------------------- MADE BY #TeamCoupDeGriffe --------------------------------------
     void updateScore() {
 
@@ -142,6 +164,12 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
     void updateVie(){
         ((TextView) findViewById(R.id.vieView)).setText("Vies : " + roomView.hero.vie);
 
+    }
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    //Création Timer----------------------------------------------------------------------MADE BY #TeamMoche-----------------------------------------
+    void updateCountDown(){
+        ((TextView) findViewById(R.id.countDown)).setText("Timer : "+ countDown/1000/60+ ":" +countDown/1000%60 );
     }
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
