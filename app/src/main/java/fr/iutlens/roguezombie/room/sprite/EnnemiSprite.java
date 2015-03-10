@@ -30,7 +30,7 @@ public class EnnemiSprite extends MonsterSprite {
         dY = hero.getY() - getY();
 
         float max=-1;
-        
+
 //      Ancienne gestion du déplacement de l'ennemi rouge
 //        for(int i=0; i<8; i++){
 //            // Calcul du produit scalaire
@@ -59,9 +59,12 @@ public class EnnemiSprite extends MonsterSprite {
                     d=i;
                 }
             } else {
+                // on récupère le sprite qui se situe pret de l'ennemi
                 Sprite sprite = room.getSprite(xSprite, ySprite);
+                // si c'est le héro, l'ennemi le tape
                 if(sprite instanceof HeroSprite) {
                     ((HeroSprite)sprite).hit();
+                    // l'ennemi ne bouge plus une fois qu'il a tapé
                    return -1;
                 }
             }
