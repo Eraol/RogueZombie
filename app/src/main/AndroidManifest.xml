@@ -10,6 +10,10 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".Accueil"
+            android:label="@string/title_activity_accueil" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
