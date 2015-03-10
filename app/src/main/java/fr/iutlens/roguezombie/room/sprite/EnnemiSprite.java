@@ -30,7 +30,8 @@ public class EnnemiSprite extends MonsterSprite {
         dY = hero.getY() - getY();
 
         float max=-1;
-
+        
+//      Ancienne gestion du déplacement de l'ennemi rouge
 //        for(int i=0; i<8; i++){
 //            // Calcul du produit scalaire
 //            ScoreCoord = ProduitScalaire(dX, dY, Coordinate.DIR8[i][0], Coordinate.DIR8[i][1]);
