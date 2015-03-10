@@ -10,7 +10,7 @@ public class HeroSprite extends MonsterSprite {
 
     private int nextDir;
     public int score;
-    public int vie;
+    public static int vie;
 
     public HeroSprite(int x, int y, int id, RoomView room) {
         super(x, y, id, room);
@@ -59,10 +59,7 @@ public class HeroSprite extends MonsterSprite {
         int xSprite = x + Coordinate.DIR8[d][0];
         int ySprite = y + Coordinate.DIR8[d][1];
         if (d != -1 && !room.isFree(xSprite, ySprite)) {
-            Sprite sprite = room.getSprite(xSprite, ySprite); // TODO Le combat
-
-
-
+            Sprite sprite = room.getSprite(xSprite, ySprite);
 
             //Si le sprite est un monstre alors le sprite est mort (Ne pas oublier ALT+Entree pour la méthode)
             if(sprite instanceof MonsterSprite) {
@@ -85,4 +82,7 @@ public class HeroSprite extends MonsterSprite {
         this.nextDir = dir;
     }
 
+    public void hit() {
+        vie=vie-1;
+    }
 }
