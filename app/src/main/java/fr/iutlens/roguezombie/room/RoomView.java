@@ -8,6 +8,7 @@ import android.graphics.PaintFlagsDrawFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import java.util.HashMap;
@@ -16,9 +17,9 @@ import java.util.Map;
 import fr.iutlens.roguezombie.R;
 import fr.iutlens.roguezombie.maze.Maze;
 import fr.iutlens.roguezombie.room.sprite.DecorSprite;
+import fr.iutlens.roguezombie.room.sprite.EnnemiSprite;
 import fr.iutlens.roguezombie.room.sprite.FuyardSprite;
 import fr.iutlens.roguezombie.room.sprite.HeroSprite;
-import fr.iutlens.roguezombie.room.sprite.MonsterSprite;
 import fr.iutlens.roguezombie.room.sprite.Sprite;
 import fr.iutlens.roguezombie.util.Coordinate;
 import fr.iutlens.roguezombie.util.SpriteSheet;
@@ -170,7 +171,12 @@ public class RoomView extends View {
 // Ajout d'un "monstre" à des coordonnées aléatoires
             int xm = (int) (Math.random() * (coordinate.getWidth() - 2)) + 1;
             int ym = (int) (Math.random() * (coordinate.getHeight() - 2)) + 1;
-            map.put(coordinate.getNdx(xm, ym), new FuyardSprite(xm, ym, 4, this));
+            if (Math.random() < 0.3) {
+                map.put(coordinate.getNdx(xm, ym), new EnnemiSprite(xm, ym, 6, this));
+            } else {
+                map.put(coordinate.getNdx(xm, ym), new FuyardSprite(xm, ym, 4, this));
+
+            }
         }
 
         int xm = (int) (Math.random() * (coordinate.getWidth() - 2));
@@ -180,24 +186,32 @@ public class RoomView extends View {
         int door = maze.get(x,y);
         int p =1;
         for(int i = 0; i <4; ++i){ // Pour chacune des 4 directions
-            if ((door & p)==0){ // Si il y a un mur
+  //          if ((door & p)==0){ // Si il y a un mur
                 // Calcul d'un des coin (a,b)
-                int a = (coordinate.DIR[i][0]+coordinate.DIR[(i+1)&3][0]+1)*(coordinate.getWidth()-1)/2;
-                int b = (coordinate.DIR[i][1]+coordinate.DIR[(i+1)&3][1]+1)*(coordinate.getHeight()-1)/2;
+                int a = (coordinate.DIR4[i][0]+coordinate.DIR4[(i+1)&3][0]+1)*(coordinate.getWidth()-1)/2;
+                int b = (coordinate.DIR4[i][1]+coordinate.DIR4[(i+1)&3][1]+1)*(coordinate.getHeight()-1)/2;
 
                 // Calcul de la direction (da,db) dans laquelle construire le mur
-                int da = coordinate.DIR[(i+3)&3][0];
-                int db = coordinate.DIR[(i+3)&3][1];
+                int da = coordinate.DIR4[(i+3)&3][0];
+                int db = coordinate.DIR4[(i+3)&3][1];
+
+
+            // ajout d'un compteur de case
+            int j = 1;
 
                 // Ajout des sprites aux coordonnées correspondantes,
                 int ndx = coordinate.getNdx(a,b);
                 while (ndx>=0){ // Jusqu'au bord de la salle
-                    map.put(ndx,new DecorSprite(a,b,ndx,1));
-                    a+= da;
-                    b+= db;
-                    ndx = coordinate.getNdx(a,b);
+                    if ((door & p)==0 || (j!=6 && j !=5))  // Si il y a un mur
+                        map.put(ndx, new DecorSprite(a, b, ndx, 1));
+                        a += da;
+                        b += db;
+                        ndx = coordinate.getNdx(a, b);
+                    Log.d("j", "" + j);
+                        j = j + 1;
+
                 }
-            }
+    //        }
             p <<=1;
         }
 
