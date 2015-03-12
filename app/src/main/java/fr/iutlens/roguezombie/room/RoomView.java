@@ -52,6 +52,7 @@ public class RoomView extends View {
 
     private SpriteSheet sprite;
     private SpriteSheet spriteFond;
+    private SpriteSheet spriteDeco;
     private Paint paint;
 
     private int w,h,x,y,dir;
@@ -80,6 +81,7 @@ public class RoomView extends View {
 
         sprite = SpriteSheet.get(this.getContext(), R.drawable.sprite);
         spriteFond = SpriteSheet.get(this.getContext(), R.drawable.sprite_carrelage);
+        spriteDeco = SpriteSheet.get(this.getContext(), R.drawable.sprite_deco);
         src = new Rect(0,0, sprite.w, sprite.h);
         src2 = new Rect(0,0, spriteFond.w, spriteFond.h);
         tmp = new RectF();
@@ -184,7 +186,22 @@ public class RoomView extends View {
                 map.put(coordinate.getNdx(xm, ym), new FuyardSprite(xm, ym, 4, this));
 
             }
+
         }
+
+        int z1=0;
+        int k1 = (int) (Math.random() * 3);
+        while (z1 < k1) {
+            z1++;
+            int x1m = (int) (Math.random() * (coordinate.getWidth() - 4)) + 2;
+            int y1m = (int) (Math.random() * (coordinate.getHeight() - 4)) + 2;
+            int ndx = coordinate.getNdx(x1m,y1m);
+            map.put(coordinate.getNdx(x1m, y1m), new DecorSprite(x1m, y1m, ndx, (int) (100+Math.random()*16)));
+
+
+        }
+
+
 
 
         if (x== xtrappe && y== ytrappe) {
@@ -265,7 +282,13 @@ public class RoomView extends View {
             float i = s.getX();
             float j = s.getY();
             tmp.set(i,j,i+1,j+1);
-            canvas.drawBitmap(sprite.getBitmap(s.getSpriteId()), src,tmp,null);
+            int spriteId = s.getSpriteId();
+
+            if (spriteId<100) {
+                canvas.drawBitmap(sprite.getBitmap(spriteId), src, tmp, null);
+            }else {
+                canvas.drawBitmap(spriteDeco.getBitmap(spriteId-100), src, tmp, null);
+            }
         }
 
 
