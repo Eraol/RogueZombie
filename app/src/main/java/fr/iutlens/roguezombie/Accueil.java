@@ -17,7 +17,7 @@ public class Accueil extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accueil);
 
-
+        /*START */
         final ImageButton playButton = (ImageButton) findViewById(R.id.imageButton);
         playButton.setOnClickListener(new View.OnClickListener() {
 
@@ -27,8 +27,31 @@ public class Accueil extends ActionBarActivity {
                 startActivity(intent);
             }});
 
+        /*REGLE*/
+
+        final Button Button2 = (Button) findViewById(R.id.button2);
+        Button2.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Accueil.this, ReglesActivity.class);
+                startActivity(intent);
+            }});
 
 
+        /*SCORE TODO
+        final Button Button = (Button) findViewById(R.id.button);
+        Button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Accueil.this, ScoreActivity.class);
+                startActivity(intent);
+            }}); */
+
+
+
+       /* +Faire petit menu*/
     }
 
 
