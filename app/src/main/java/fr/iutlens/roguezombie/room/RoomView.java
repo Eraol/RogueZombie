@@ -104,6 +104,7 @@ public class RoomView extends View {
     public void setMaze(Maze maze, Coordinate coordinate){
         this.maze = maze;
         this.coordinate = coordinate;
+        this.hero=null;
 
         setZoom(w,h);
         invalidate();

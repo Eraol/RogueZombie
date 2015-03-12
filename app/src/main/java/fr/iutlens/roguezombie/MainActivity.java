@@ -147,7 +147,6 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
         // Configuration de la salle
         roomView.setMaze(maze, new Coordinate(10, 10));
         roomView.setRoom(3, 3, -1);
-
         countDown=60*5*1000; // ICI TU MODIFIE LE TEMPS
         // On démarre le jeu !
         update();
