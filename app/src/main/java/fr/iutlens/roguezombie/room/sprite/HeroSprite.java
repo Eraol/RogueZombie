@@ -10,7 +10,11 @@ public class HeroSprite extends MonsterSprite {
 
     private int nextDir;
     public int score;
-    public static int vie;
+    public int vie;
+    // Quand statut vaut 0, le héros est normal
+    // Quand le statut vaut 1 le héro est invincible
+    public int statut=0;
+
 
     public HeroSprite(int x, int y, int id, RoomView room) {
         super(x, y, id, room);
@@ -83,6 +87,9 @@ public class HeroSprite extends MonsterSprite {
     }
 
     public void hit() {
-        vie=vie-1;
+        if (statut!=1) {
+            vie = vie - 1;
+            statut=1;
+        }
     }
 }
