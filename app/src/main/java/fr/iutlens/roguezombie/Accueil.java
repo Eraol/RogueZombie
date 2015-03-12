@@ -38,20 +38,6 @@ public class Accueil extends ActionBarActivity {
                 startActivity(intent);
             }});
 
-
-        /*SCORE TODO
-        final Button Button = (Button) findViewById(R.id.button);
-        Button.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Accueil.this, ScoreActivity.class);
-                startActivity(intent);
-            }}); */
-
-
-
-       /* +Faire petit menu*/
     }
 
 

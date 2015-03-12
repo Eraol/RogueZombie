@@ -16,24 +16,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/imageButton"
         android:background="@drawable/sprite_accueil"
-        android:layout_weight="0.2"
-        android:clickable="true" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/button"
-        android:layout_weight="0.9"
+        android:layout_weight="0.1"
         android:clickable="true"
-        android:text="Classement"
-        android:textColor="#751303"
-        android:background="#A09FA2"
-        android:layout_margin="1dp" />
+        android:layout_margin="2dp" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Régles"
+        android:text="Contexte"
         android:id="@+id/button2"
         android:layout_weight="0.9"
         android:clickable="true"
