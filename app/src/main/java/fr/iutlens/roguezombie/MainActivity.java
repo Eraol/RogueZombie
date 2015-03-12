@@ -23,7 +23,7 @@ import fr.iutlens.roguezombie.joystick.JoystickView;
 import fr.iutlens.roguezombie.util.Coordinate;
 
 
-public class  MainActivity extends ActionBarActivity implements OnRoomOutListener {
+public class MainActivity extends ActionBarActivity implements OnRoomOutListener {
 
 
     private Maze maze;
@@ -36,7 +36,7 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
     private boolean running;
 
     @Override
-    public void onRoomOut( int x, int y, int dir) {
+    public void onRoomOut(int x, int y, int dir) {
         //Calcul de la prochaine salle dans la direction indiquée
         int ndx = coordinate.getNext(coordinate.getNdx(x, y), dir);
 
@@ -53,7 +53,7 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
     static class RefreshHandler extends Handler {
         WeakReference<MainActivity> weak;
 
-        RefreshHandler(MainActivity animator){
+        RefreshHandler(MainActivity animator) {
             weak = new WeakReference(animator);
         }
 
@@ -72,30 +72,23 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
     private RefreshHandler handler = new RefreshHandler(this);
 
     private void update() {
-        countDown = countDown-40;
-        if(countDown>0) {
+        countDown = countDown - 40;
+        if (countDown > 0) {
             handler.sleep(40);
-            int dir = (int) (8+Math.round(joystickView.getAngle()/(Math.PI/4)))%8;
+
             int longueur = (int) Math.round(joystickView.getRadial());
-            if (longueur == 0) {
-                dir = -1;
-            }
 
-
-        int dir = (int) (8+Math.round(joystickView.getAngle()/(Math.PI/4)))%8;
-        int longueur = (int) Math.round(joystickView.getRadial());
-
-
-        roomView.move((float) joystickView.getAngle(), longueur == 0);
-        roomView.act();
-
+            roomView.move((float) joystickView.getAngle(), longueur == 0);
+            roomView.act();
 
             updateCountDown();
-        }
-        else{
+            updateScore();
+            updateVie();
+
+        } else {
             new AlertDialog.Builder(MainActivity.this)
                     .setTitle("Vous avez echoué")
-                    .setMessage("Vous avez mangé "+roomView.hero.score+" cerveaux, voulez vous recommencer ?")
+                    .setMessage("Vous avez mangé " + roomView.hero.score + " cerveaux, voulez vous recommencer ?")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             startGame();
@@ -104,7 +97,7 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
                     .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             MainActivity.this.finish();
-                           //TODO ICI TU RENVOIS VERS LE MENU
+                            //TODO ICI TU RENVOIS VERS LE MENU
                         }
                     })
                     .setIcon(android.R.drawable.ic_dialog_alert)
@@ -125,7 +118,7 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
         setContentView(R.layout.activity_main);
 
         // Création du layrinthe 10x10
-        coordinate = new Coordinate(6,6);
+        coordinate = new Coordinate(6, 6);
 
         miniMapView = (MiniMapView) findViewById(R.id.view);
         roomView = (RoomView) findViewById(R.id.view2);
@@ -138,11 +131,11 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
         maze = new Maze(coordinate);
         // Configuration de la minimap
         miniMapView.setMaze(maze);
-        maze.visit(coordinate.getNdx(3,3)); // On commence en 5x5
+        maze.visit(coordinate.getNdx(3, 3)); // On commence en 5x5
         // Configuration de la salle
         roomView.setMaze(maze, new Coordinate(10, 10));
         roomView.setRoom(3, 3, -1);
-        countDown=60*5*1000; // ICI TU MODIFIE LE TEMPS
+        countDown = 60 * 5 * 1000; // ICI TU MODIFIE LE TEMPS
         // On démarre le jeu !
         update();
     }
@@ -155,41 +148,40 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //Création point de vie----------------------------------------------------------------------MADE BY #TeamCoupDeGriffe-----------------------------------------
-    void updateVie(){
+    void updateVie() {
         ((TextView) findViewById(R.id.vieView)).setText("Vies : " + roomView.hero.vie);
 
     }
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //Création Timer----------------------------------------------------------------------MADE BY #TeamMoche-----------------------------------------
-    void updateCountDown(){
-        ((TextView) findViewById(R.id.countDown)).setText("Temps : "+ countDown/1000/60+ ":" +countDown/1000%60 );
+    void updateCountDown() {
+        ((TextView) findViewById(R.id.countDown)).setText("Temps : " + countDown / 1000 / 60 + ":" + countDown / 1000 % 60);
     }
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //    public void onButtonClick(View view){
 
-         // Détection de la direction choisie
-       // int dir = -1;
-       // switch (view.getId()){
-         //   case R.id.buttonRight :
-               // dir = 0;
-              //  break;
-            //case R.id.buttonDown :
-            //    dir = 1;
-              //  break;
-            //case R.id.buttonLeft :
-             //   dir = 2;
-           //     break;
-         //   case R.id.buttonUp :
-        //        dir = 3;
-       //         break;
-     //   }
+    // Détection de la direction choisie
+    // int dir = -1;
+    // switch (view.getId()){
+    //   case R.id.buttonRight :
+    // dir = 0;
+    //  break;
+    //case R.id.buttonDown :
+    //    dir = 1;
+    //  break;
+    //case R.id.buttonLeft :
+    //   dir = 2;
+    //     break;
+    //   case R.id.buttonUp :
+    //        dir = 3;
+    //         break;
+    //   }
 
-        // Demande le déplacement dans la direction
+    // Demande le déplacement dans la direction
     //    roomView.move(dir);
-   // }
-
+    // }
 
 
     @Override
