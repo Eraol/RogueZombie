@@ -28,6 +28,7 @@ import fr.iutlens.roguezombie.maze.MiniMapView;
 import fr.iutlens.roguezombie.room.OnRoomOutListener;
 import fr.iutlens.roguezombie.room.RoomView;
 import fr.iutlens.roguezombie.joystick.JoystickView;
+import fr.iutlens.roguezombie.room.sprite.Sprite;
 import fr.iutlens.roguezombie.util.Coordinate;
 
 
@@ -225,19 +226,7 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
         return super.onOptionsItemSelected(item);
     }
 
-    public void trappegagner() {
-        /* coordonnes aléatoires */
-        int xg = 0;
-        int yg = 0;
 
-       // int ndx = coordinate.getNdx(xg, yg);
-
-        if (   (roomView.hero.getX() == xg) && (roomView.hero.getY() == yg)  ) {
-            //popup();
-
-        }
-
-    }
 }
 
 

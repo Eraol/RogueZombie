@@ -156,8 +156,8 @@ public class RoomView extends View {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        xtrappe = (int) (Math.random() * (6 - 1) + 1);
-        ytrappe = (int) (Math.random() * (6 - 1) + 1);
+        /*xtrappe = (int) (Math.random() * (6 - 1) + 1);
+        ytrappe = (int) (Math.random() * (6 - 1) + 1);*/
         this.roomChanged = true;
     }
 
@@ -190,11 +190,6 @@ public class RoomView extends View {
         if (x== xtrappe && y== ytrappe) {
             int ndx = coordinate.getNdx(5,5);
                 map.put(ndx,new DecorSprite(x,y,ndx,0)); /* affichage trappe */
-
-           /* if( (hero.getNdx()== ndx) &&   ) {
-
-
-            }*/
         }
 
 
