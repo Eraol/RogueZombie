@@ -182,7 +182,13 @@ public class RoomView extends View {
         if (x== xtrappe && y== ytrappe) {
             int ndx = coordinate.getNdx(5,5);
                 map.put(ndx,new DecorSprite(x,y,ndx,1)); /* affichage trappe */
+
+         /*   if( (hero.getNdx()== ndx) &&   ) {
+
+
+            }*/
         }
+
 
 
 
@@ -202,7 +208,7 @@ public class RoomView extends View {
                 // Ajout des sprites aux coordonnées correspondantes,
                 int ndx = coordinate.getNdx(a,b);
                 while (ndx>=0){ // Jusqu'au bord de la salle
-                    map.put(ndx,new DecorSprite(a,b,ndx,4));
+                    map.put(ndx,new DecorSprite(a,b,ndx,1));
                     a+= da;
                     b+= db;
                     ndx = coordinate.getNdx(a,b);
