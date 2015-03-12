@@ -30,8 +30,6 @@ public class SpriteSheet {
 
         map.put(R.drawable.sprite, new SpriteSheet(2,5));
 
-        map.put(R.drawable.sprite, new SpriteSheet(2,5));
-
         map.put(R.drawable.sprite_carrelage, new SpriteSheet(1,1));
 
         map.put(R.drawable.sprite_deco, new SpriteSheet(4,4));
