@@ -190,7 +190,7 @@ public class RoomView extends View {
         }
 
         int z1=0;
-        int k1 = (int) (Math.random() * (10 - 3) + 3);
+        int k1 = (int) (Math.random() * 3);
         while (z1 < k1) {
             z1++;
             int x1m = (int) (Math.random() * (coordinate.getWidth() - 4)) + 2;
