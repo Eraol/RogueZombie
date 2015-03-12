@@ -144,10 +144,10 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
         // Configuration de la minimap
         miniMapView.setMaze(maze);
         maze.visit(coordinate.getNdx(3,3)); // On commence en 5x5
-
         // Configuration de la salle
         roomView.setMaze(maze, new Coordinate(10, 10));
         roomView.setRoom(3, 3, -1);
+        roomView.hero.score=0;
         countDown=60*5*1000; // ICI TU MODIFIE LE TEMPS
         // On démarre le jeu !
         update();
@@ -156,7 +156,6 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
     // public void onButtonClick(View view){
     // Création du score ---------------------------------------------------------------------- MADE BY #TeamCoupDeGriffe --------------------------------------
     void updateScore() {
-
         ((TextView) findViewById(R.id.scoreView)).setText("Cerveaux : " + roomView.hero.score);
     }
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------
