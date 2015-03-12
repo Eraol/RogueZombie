@@ -20,6 +20,7 @@ import fr.iutlens.roguezombie.maze.MiniMapView;
 import fr.iutlens.roguezombie.room.OnRoomOutListener;
 import fr.iutlens.roguezombie.room.RoomView;
 import fr.iutlens.roguezombie.joystick.JoystickView;
+import fr.iutlens.roguezombie.room.sprite.Sprite;
 import fr.iutlens.roguezombie.util.Coordinate;
 
 
@@ -40,9 +41,14 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
         //Calcul de la prochaine salle dans la direction indiquée
         int ndx = coordinate.getNext(coordinate.getNdx(x, y), dir);
 
+       dir = maze.caseVisite(x, y);
+
+
         //mise à jour de la minimap
         maze.visit(ndx);
         miniMapView.invalidate();
+
+
 
         //mise à jour de la salle affichée
         roomView.setRoom(coordinate.getI(ndx), coordinate.getJ(ndx), dir);
@@ -207,6 +213,9 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
         return super.onOptionsItemSelected(item);
     }
 
+
 }
+
+
 
 

@@ -20,6 +20,7 @@ import fr.iutlens.roguezombie.room.sprite.DecorSprite;
 import fr.iutlens.roguezombie.room.sprite.EnnemiSprite;
 import fr.iutlens.roguezombie.room.sprite.FuyardSprite;
 import fr.iutlens.roguezombie.room.sprite.HeroSprite;
+import fr.iutlens.roguezombie.room.sprite.MonsterSprite;
 import fr.iutlens.roguezombie.room.sprite.Sprite;
 import fr.iutlens.roguezombie.util.Coordinate;
 import fr.iutlens.roguezombie.util.SpriteSheet;
@@ -55,6 +56,8 @@ public class RoomView extends View {
 
     private int w,h,x,y,dir;
     private boolean roomChanged;
+    private int xtrappe = 2;
+    private int ytrappe = 3;
 
     public RoomView(Context context) {
         super(context);
@@ -149,17 +152,19 @@ public class RoomView extends View {
      * @param y
      * @param dir
      */
-    public void setRoom(int x,int y, int dir) {
+    public void setRoom(int x, int y, int dir) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-
+        /*xtrappe = (int) (Math.random() * (6 - 1) + 1);
+        ytrappe = (int) (Math.random() * (6 - 1) + 1);*/
         this.roomChanged = true;
     }
 
 
     /***
      * Réalise le changement de salle demandé précédemment.
+
      */
     private void setRoom(){
         roomChanged = false;
@@ -167,9 +172,10 @@ public class RoomView extends View {
 
         int z=0;
         int k= (int) (Math.random() * (6 - 1) + 1);
+        //sauvegarder k => dans nbmonstre
         while (z < k) {
             z++;
-// Ajout d'un "monstre" à des coordonnées aléatoires
+            // Ajout d'un "monstre" à des coordonnées aléatoires
             int xm = (int) (Math.random() * (coordinate.getWidth() - 2)) + 1;
             int ym = (int) (Math.random() * (coordinate.getHeight() - 2)) + 1;
             if (Math.random() < 0.3) {
@@ -179,6 +185,15 @@ public class RoomView extends View {
 
             }
         }
+
+
+        if (x== xtrappe && y== ytrappe) {
+            int ndx = coordinate.getNdx(5,5);
+                map.put(ndx,new DecorSprite(x,y,ndx,0)); /* affichage trappe */
+        }
+
+
+
 
         int xm = (int) (Math.random() * (coordinate.getWidth() - 2));
         int ym = (int) (Math.random() * (coordinate.getHeight() - 2));
