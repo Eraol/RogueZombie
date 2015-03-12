@@ -4,12 +4,12 @@ import fr.iutlens.roguezombie.room.RoomView;
 import fr.iutlens.roguezombie.util.Coordinate;
 
 /**
- * Created by felicia.garciafernandes on 27/01/15.
+ * Created by simon.florysiak on 17/02/15.
  */
-public class FuyardSprite extends MonsterSprite {
 
+public class EnnemiSprite extends MonsterSprite {
 
-    public FuyardSprite(int x, int y, int id, RoomView room) {
+    public EnnemiSprite(int x, int y, int id, RoomView room) {
         super(x, y, id, room);
     }
 
@@ -22,6 +22,7 @@ public class FuyardSprite extends MonsterSprite {
         hero.getX();
         hero.getY();
 
+
         float ScoreCoord = 0;
 
         float dX, dY;
@@ -32,16 +33,17 @@ public class FuyardSprite extends MonsterSprite {
 
         for(int i=0; i<8; i++){
             // Calcul du produit scalaire
-            ScoreCoord = -ProduitScalaire(dX, dY, Coordinate.DIR8[i][0], Coordinate.DIR8[i][1]);
+            ScoreCoord = ProduitScalaire(dX, dY, Coordinate.DIR8[i][0], Coordinate.DIR8[i][1]);
 
             // teste si loin
             if(room.isFree(x+Coordinate.DIR8[i][0],y+Coordinate.DIR8[i][1]))  {
-                    if(ScoreCoord > max) { // si possible et meilleur
-                max=ScoreCoord;
-                d=i;
+                if(ScoreCoord > max) { // si possible et meilleur
+                    max=ScoreCoord;
+                    d=i;
+                }
             }
         }
-        }
+
 
         if (!room.isFree(x+Coordinate.DIR8[d][0],y+Coordinate.DIR8[d][1])) d = -1;
         return d;
@@ -53,6 +55,5 @@ public class FuyardSprite extends MonsterSprite {
         result = (x*x2)+(y*y2);
         return result;
     }
+
 }
-
-

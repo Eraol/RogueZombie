@@ -1,11 +1,19 @@
 package fr.iutlens.roguezombie;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.app.ActionBarActivity;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,9 +38,10 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
     private Coordinate coordinate;
     private RoomView roomView;
     private MiniMapView miniMapView;
-    private JoystickView joystickView;
     private int score;
-
+    private JoystickView joystickView;
+    private long countDown;
+    private boolean running;
 
     @Override
     public void onRoomOut( int x, int y, int dir) {
@@ -76,22 +85,41 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
     private RefreshHandler handler = new RefreshHandler(this);
 
     private void update() {
-        handler.sleep(40);
+        countDown = countDown-40;
+        if(countDown>0) {
+            handler.sleep(40);
+            int dir = (int) (8+Math.round(joystickView.getAngle()/(Math.PI/4)))%8;
+            int longueur = (int) Math.round(joystickView.getRadial());
+            if (longueur == 0) {
+                dir = -1;
+            }
 
-    Log.d("Pad", "" + Math.round(joystickView.getRadial()));
+            roomView.move(dir);
+            roomView.act();
 
 
-        int dir = (int) (4+Math.round(joystickView.getAngle()/(Math.PI/2)))%4;
-        int longueur = (int) Math.round(joystickView.getRadial());
-        if (longueur == 0) {
-            dir = -1;
+            updateScore();
+            updateVie();
+            updateCountDown();
         }
-
-        roomView.move(dir);
-        roomView.act();
-
-
-        updateScore();
+        else{
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle("Vous avez echoué")
+                    .setMessage("Vous avez mangé "+roomView.hero.score+" cerveaux, voulez vous recommencer ?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            startGame();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            MainActivity.this.finish();
+                           //TODO ICI TU RENVOIS VERS LE MENU
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
     }
 
 
@@ -108,34 +136,46 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
 
         // Création du layrinthe 10x10
         coordinate = new Coordinate(6,6);
-        maze = new Maze(coordinate);
 
-        // Configuration de la minimap
         miniMapView = (MiniMapView) findViewById(R.id.view);
-        miniMapView.setMaze(maze);
-        maze.visit(coordinate.getNdx(3,3)); // On commence en 5x5
-
-        // Configuration de la salle
         roomView = (RoomView) findViewById(R.id.view2);
         roomView.setListener(this);
+        joystickView = (JoystickView) findViewById(R.id.joystick);
+        startGame();
+    }
+
+    private void startGame() {
+        maze = new Maze(coordinate);
+        // Configuration de la minimap
+        miniMapView.setMaze(maze);
+        maze.visit(coordinate.getNdx(3,3)); // On commence en 5x5
+        // Configuration de la salle
         roomView.setMaze(maze, new Coordinate(10, 10));
         roomView.setRoom(3, 3, -1);
-
-
-        joystickView = (JoystickView) findViewById(R.id.joystick);
-
-
+        countDown=60*5*1000; // ICI TU MODIFIE LE TEMPS
         // On démarre le jeu !
         update();
     }
 
-   // public void onButtonClick(View view){
+    // public void onButtonClick(View view){
     // Création du score ---------------------------------------------------------------------- MADE BY #TeamCoupDeGriffe --------------------------------------
     void updateScore() {
-
         ((TextView) findViewById(R.id.scoreView)).setText("Cerveaux : " + roomView.hero.score);
     }
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    //Création point de vie----------------------------------------------------------------------MADE BY #TeamCoupDeGriffe-----------------------------------------
+    void updateVie(){
+        ((TextView) findViewById(R.id.vieView)).setText("Vies : " + roomView.hero.vie);
+
+    }
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    //Création Timer----------------------------------------------------------------------MADE BY #TeamMoche-----------------------------------------
+    void updateCountDown(){
+        ((TextView) findViewById(R.id.countDown)).setText("Temps : "+ countDown/1000/60+ ":" +countDown/1000%60 );
+    }
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //    public void onButtonClick(View view){
 
@@ -168,6 +208,7 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
