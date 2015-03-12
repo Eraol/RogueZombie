@@ -50,7 +50,7 @@ public class HeroSprite extends MonsterSprite {
 
         int ndxFutur = room.getCoordinate().getNdx(xSprite, ySprite);
 
-//        Log.d("HeroSprite", "x:" + x + " y:" + y + " ndx:" + ndx + " ndxFutur:" + ndxFutur);
+        Log.d("HeroSprite", "x:" + x + " y:" + y + " ndx:" + ndx + " ndxFutur:" + ndxFutur);
 
         if (ndxFutur != ndx) {
 
@@ -58,7 +58,7 @@ public class HeroSprite extends MonsterSprite {
                 Sprite sprite = room.getSprite(xSprite, xSprite);
 
                 //Si le sprite est un monstre alors le sprite est mort (Ne pas oublier ALT+Entree pour la méthode)
-                if (sprite instanceof MonsterSprite) {
+                if (sprite instanceof MonsterSprite && sprite != this) {
                     ((MonsterSprite) sprite).kill();
                     score++;
                 }
@@ -75,7 +75,7 @@ public class HeroSprite extends MonsterSprite {
                 else if (Math.round(x) == room.getCoordinate().getWidth() - 1) outDir = 0;
                 else if (Math.round(y) == room.getCoordinate().getHeight() - 1) outDir = 1;
 
-                Log.d("HeroSprite",""+x+" "+y+" "+outDir);
+              //  Log.d("HeroSprite",""+x+" "+y+" "+outDir);
                 //Si oui, et si une action est prévue dans ce cas...
                 if (outDir != -1 && room.getListener() != null) {
                     // Calcul de la position dans la nouvelle salle (+2 fois la direction, modulo la taille de la salle)
