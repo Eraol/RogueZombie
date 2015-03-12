@@ -1,5 +1,7 @@
 package fr.iutlens.roguezombie.room.sprite;
 
+import android.util.Log;
+
 import fr.iutlens.roguezombie.room.RoomView;
 import fr.iutlens.roguezombie.util.Coordinate;
 
@@ -11,9 +13,7 @@ public class HeroSprite extends MonsterSprite {
     private int nextDir;
     public int score;
     public int vie;
-    // Quand statut vaut 0, le héros est normal
-    // Quand le statut vaut 1 le héro est invincible
-    public int statut=0;
+    public int invincibilite =0;
 
 
     public HeroSprite(int x, int y, int id, RoomView room) {
@@ -26,7 +26,6 @@ public class HeroSprite extends MonsterSprite {
 
     @Override
     protected void onMoved() {
-
         // Vérifie si un des bord de l'écran est atteint (= une porte)
         int outDir = -1;
         if (x == 0) outDir = 2;
@@ -55,6 +54,13 @@ public class HeroSprite extends MonsterSprite {
      */
     @Override
     protected int chooseDir() {
+        //Gestion de l'invicibilité
+        if(invincibilite>0){
+            invincibilite=invincibilite-1;
+        }
+        Log.d("HeroSprite","Invincibilité: " + invincibilite);
+
+
         int d = nextDir;
         nextDir = -1;
 
@@ -87,9 +93,11 @@ public class HeroSprite extends MonsterSprite {
     }
 
     public void hit() {
-        if (statut!=1) {
+        if (invincibilite ==0 && vie>0) {
             vie = vie - 1;
-            statut=1;
+            invincibilite =10;
+        } else {
+            isDead();
         }
     }
 }
