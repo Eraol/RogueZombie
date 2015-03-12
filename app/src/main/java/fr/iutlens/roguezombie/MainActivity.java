@@ -1,20 +1,12 @@
 package fr.iutlens.roguezombie;
 
 import android.os.Bundle;
-import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -83,11 +75,9 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
 
         int dir = (int) (8+Math.round(joystickView.getAngle()/(Math.PI/4)))%8;
         int longueur = (int) Math.round(joystickView.getRadial());
-        if (longueur == 0) {
-            dir = -1;
-        }
 
-        roomView.move((float) joystickView.getAngle());
+
+        roomView.move((float) joystickView.getAngle(), longueur == 0);
         roomView.act();
 
         updateScore();

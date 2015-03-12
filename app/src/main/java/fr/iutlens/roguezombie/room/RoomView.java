@@ -331,10 +331,11 @@ public class RoomView extends View {
      * Demande un déplacement dans la direction indiquée
      *
      * @param dir
+     * @param stop
      */
 
-    public void move(float dir) {
+    public void move(float dir, boolean stop) {
         if (hero != null)
-            hero.setDir(dir);
+            hero.setDir(dir , stop);
     }
 }

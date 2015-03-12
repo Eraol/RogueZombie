@@ -17,6 +17,7 @@ public class HeroSprite extends MonsterSprite {
 
     public float x, y;
     public float v, angle;
+    public boolean stop = true;
 
     public HeroSprite(int x, int y, int id, RoomView room) {
         super(x, y, id, room);
@@ -34,6 +35,9 @@ public class HeroSprite extends MonsterSprite {
     @Override
     public void act() {
 
+        if (stop) {
+            return;
+        }
 
         //calcul nouveau x/y
 
@@ -183,8 +187,9 @@ public class HeroSprite extends MonsterSprite {
      *
      * @param dir
      */
-    public void setDir(float dir) {
+    public void setDir(float dir , boolean stop) {
         this.angle = dir;
+        this.stop = stop;
     }
 
 }
