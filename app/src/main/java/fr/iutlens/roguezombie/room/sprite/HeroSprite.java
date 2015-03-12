@@ -15,14 +15,14 @@ public class HeroSprite extends MonsterSprite {
     public int vie;
 
 
-    public float x,y;
-    public float v,angle;
+    public float x, y;
+    public float v, angle;
 
     public HeroSprite(int x, int y, int id, RoomView room) {
         super(x, y, id, room);
         nextDir = -1;
-        score=0;
-        vie=5;
+        score = 0;
+        vie = 5;
         v = 0.1f;
         angle = 0f;
 
@@ -39,6 +39,7 @@ public class HeroSprite extends MonsterSprite {
 
         float xFutur = (float) (x + v * Math.cos(angle));
         float yFutur = (float) (y + v * Math.sin(angle));
+
         //modif x,y (cos/sin)
 
         // autorisé ? // chooseDir /
@@ -49,7 +50,7 @@ public class HeroSprite extends MonsterSprite {
 
         int ndxFutur = room.getCoordinate().getNdx(xSprite, ySprite);
 
-        Log.d("HeroSprite", "x:" + x + " y:" + y + " ndx:" + ndx + " ndxFutur:" + ndxFutur);
+//        Log.d("HeroSprite", "x:" + x + " y:" + y + " ndx:" + ndx + " ndxFutur:" + ndxFutur);
 
         if (ndxFutur != ndx) {
 
@@ -66,6 +67,28 @@ public class HeroSprite extends MonsterSprite {
                 x = xFutur;
                 y = yFutur;
                 ndx = ndxFutur;
+
+                //    Vérifie si un des bord de l'écran est atteint (= une porte)
+                int outDir = -1;
+                if (Math.round(x) == 0) outDir = 2;
+                else if (Math.round(y) == 0) outDir = 3;
+                else if (Math.round(x) == room.getCoordinate().getWidth() - 1) outDir = 0;
+                else if (Math.round(y) == room.getCoordinate().getHeight() - 1) outDir = 1;
+
+                Log.d("HeroSprite",""+x+" "+y+" "+outDir);
+                //Si oui, et si une action est prévue dans ce cas...
+                if (outDir != -1 && room.getListener() != null) {
+                    // Calcul de la position dans la nouvelle salle (+2 fois la direction, modulo la taille de la salle)
+                    x = (x + room.getCoordinate().getWidth() + Coordinate.DIR4[outDir][0] * 2) % room.getCoordinate().getWidth();
+                    y = (y + room.getCoordinate().getHeight() + Coordinate.DIR4[outDir][1] * 2) % room.getCoordinate().getHeight();
+                    ndx = room.getCoordinate().getNdx(Math.round(x), Math.round(y));
+
+                    // Lance l'action de sortie de salle.
+                    int ndx = room.getMaze().getLast();
+                    room.getListener().onRoomOut(room.getMaze().coordinate.getI(ndx),
+                            room.getMaze().coordinate.getJ(ndx), outDir);
+                }
+
             }
         } else {
             x = xFutur;
@@ -73,11 +96,9 @@ public class HeroSprite extends MonsterSprite {
         }
     }
 
-        // Si changement case (nouveau ndx != ancien)
+    // Si changement case (nouveau ndx != ancien)
 
-        // Alors // onMoved
-
-
+    // Alors // onMoved
 
 
     @Override
