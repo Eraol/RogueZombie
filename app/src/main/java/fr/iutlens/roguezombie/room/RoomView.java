@@ -183,7 +183,7 @@ public class RoomView extends View {
             int ndx = coordinate.getNdx(5,5);
                 map.put(ndx,new DecorSprite(x,y,ndx,1)); /* affichage trappe */
 
-         /*   if( (hero.getNdx()== ndx) &&   ) {
+           /* if( (hero.getNdx()== ndx) &&   ) {
 
 
             }*/
