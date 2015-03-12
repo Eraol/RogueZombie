@@ -54,6 +54,8 @@ public class RoomView extends View {
 
     private int w,h,x,y,dir;
     private boolean roomChanged;
+    private int xtrappe = 2;
+    private int ytrappe = 3;
 
     public RoomView(Context context) {
         super(context);
@@ -151,7 +153,8 @@ public class RoomView extends View {
         this.x = x;
         this.y = y;
         this.dir = dir;
-
+        xtrappe = (int) (Math.random() * (6 - 1) + 1);
+        ytrappe = (int) (Math.random() * (6 - 1) + 1);
         this.roomChanged = true;
     }
 
@@ -175,8 +178,12 @@ public class RoomView extends View {
             map.put(coordinate.getNdx(xm, ym), new FuyardSprite(xm, ym, 4, this));
         }
 
-       /* if (maze.caseVisite(x,y)) {
-        }*/
+
+        if (x== xtrappe && y== ytrappe) {
+            int ndx = coordinate.getNdx(5,5);
+                map.put(ndx,new DecorSprite(x,y,ndx,1)); /* affichage trappe */
+        }
+
 
 
         // Affichage des murs partout où il n'y a pas de porte.
@@ -195,7 +202,7 @@ public class RoomView extends View {
                 // Ajout des sprites aux coordonnées correspondantes,
                 int ndx = coordinate.getNdx(a,b);
                 while (ndx>=0){ // Jusqu'au bord de la salle
-                    map.put(ndx,new DecorSprite(a,b,ndx,1));
+                    map.put(ndx,new DecorSprite(a,b,ndx,4));
                     a+= da;
                     b+= db;
                     ndx = coordinate.getNdx(a,b);

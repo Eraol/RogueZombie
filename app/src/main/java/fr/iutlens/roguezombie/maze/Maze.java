@@ -162,3 +162,5 @@ public class Maze {
         return ((door[ndx]>>>dir)&1) == 1 ;
     }
 }
+
+/* 4 coordonnes ou 1 index = numero de la salle  */

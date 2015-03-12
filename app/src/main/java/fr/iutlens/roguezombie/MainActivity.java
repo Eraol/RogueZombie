@@ -184,6 +184,21 @@ public class  MainActivity extends ActionBarActivity implements OnRoomOutListene
         return super.onOptionsItemSelected(item);
     }
 
+    public void trappegagner() {
+        /* coordonnes aléatoires */
+        int xg = 0;
+        int yg = 0;
+
+       // int ndx = coordinate.getNdx(xg, yg);
+
+        if (   (roomView.hero.getX() == xg) && (roomView.hero.getY() == yg)  ) {
+            //popup();
+
+        }
+
+    }
 }
+
+
 
 
