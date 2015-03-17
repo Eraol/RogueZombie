@@ -1,7 +1,10 @@
 package fr.iutlens.roguezombie.room.sprite;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.util.Log;
 
+import fr.iutlens.roguezombie.MainActivity;
 import fr.iutlens.roguezombie.room.RoomView;
 import fr.iutlens.roguezombie.util.Coordinate;
 
@@ -19,6 +22,7 @@ public class HeroSprite extends MonsterSprite {
     public float x, y;
     public float v, angle;
     public boolean stop = true;
+    public boolean gagne;
 
     public HeroSprite(int x, int y, int id, RoomView room) {
         super(x, y, id, room);
@@ -31,6 +35,7 @@ public class HeroSprite extends MonsterSprite {
         this.x = x;
         this.y = y;
         ndx = room.getCoordinate().getNdx(Math.round(x), Math.round(y));
+        gagne  = false;
     }
 
 
@@ -40,7 +45,7 @@ public class HeroSprite extends MonsterSprite {
             invincibilite=invincibilite-1;
         }
 
-        Log.d("HeroSprite","Invincibilité :"+invincibilite);
+//        Log.d("HeroSprite","Invincibilité :"+invincibilite);
 
         if (stop) {
             return;
@@ -70,7 +75,14 @@ public class HeroSprite extends MonsterSprite {
                 if (sprite instanceof MonsterSprite && sprite != this) {
                     ((MonsterSprite) sprite).kill();
                     score++;
+
                 }
+
+                if (sprite instanceof DecorSprite && sprite.getSpriteId() == 0 ) {
+                    gagne = true;
+
+                }
+
 
             } else {
                 x = xFutur;
@@ -104,6 +116,8 @@ public class HeroSprite extends MonsterSprite {
             y = yFutur;
         }
     }
+
+
 
     // Si changement case (nouveau ndx != ancien)
 

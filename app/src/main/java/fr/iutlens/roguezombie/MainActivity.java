@@ -37,6 +37,7 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
     private JoystickView joystickView;
     private long countDown;
     private boolean running;
+    private boolean fin=false;
 
     @Override
     public void onRoomOut(int x, int y, int dir) {
@@ -81,7 +82,13 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
 
     private void update() {
         countDown = countDown - 40;
-        if (countDown > 0) {
+
+        // test si fin (pedu : temps
+        if (countDown < 0) {
+                 popup("Vous avez echoué");
+                 }
+
+        if ( !fin ) { //on joue -- si pas fin
             handler.sleep(40);
 
             int longueur = (int) Math.round(joystickView.getRadial());
@@ -89,28 +96,40 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
             roomView.move((float) joystickView.getAngle(), longueur == 0);
             roomView.act();
 
+            if (roomView.hero.gagne) {
+                popup("Vous avez gagné");
+            }
+
             updateCountDown();
             updateScore();
             updateVie();
+            if (roomView.hero.vie<1) {
+                popup("Vous avez echoué");
+            }
+        } 
 
-        } else {
-            new AlertDialog.Builder(MainActivity.this)
-                    .setTitle("Vous avez echoué")
-                    .setMessage("Vous avez mangé " + roomView.hero.score + " cerveaux, voulez vous recommencer ?")
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            startGame();
-                        }
-                    })
-                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent intent = new Intent(MainActivity.this, Accueil.class);
-                            startActivity(intent);
-                        }
-                    })
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
-        }
+
+    }
+
+    private void popup(String title) {
+          // fin <- vrai
+       fin = true;
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle(title)
+                .setMessage("Vous avez mangé " + roomView.hero.score + " cerveaux, voulez vous recommencer ?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        startGame();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(MainActivity.this, Accueil.class);
+                        startActivity(intent);
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
 
@@ -141,6 +160,7 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
         roomView.setMaze(maze, new Coordinate(10, 10));
         roomView.setRoom(3, 3, -1);
         countDown = 60 * 5 * 1000; // ICI TU MODIFIE LE TEMPS
+        fin = false;
         // On démarre le jeu !
         update();
     }
@@ -155,9 +175,7 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
     //Création point de vie----------------------------------------------------------------------MADE BY #TeamCoupDeGriffe-----------------------------------------
     void updateVie() {
         ((TextView) findViewById(R.id.vieView)).setText("Vies : " + roomView.hero.vie);
-        if (roomView.hero.vie<1) {
-            countDown = 0;
-        }
+       
     }
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
