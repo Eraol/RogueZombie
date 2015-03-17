@@ -21,6 +21,7 @@ import fr.iutlens.roguezombie.maze.MiniMapView;
 import fr.iutlens.roguezombie.room.OnRoomOutListener;
 import fr.iutlens.roguezombie.room.RoomView;
 import fr.iutlens.roguezombie.joystick.JoystickView;
+import fr.iutlens.roguezombie.room.sprite.HeroSprite;
 import fr.iutlens.roguezombie.room.sprite.Sprite;
 import fr.iutlens.roguezombie.util.Coordinate;
 
@@ -78,7 +79,7 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
 
     private RefreshHandler handler = new RefreshHandler(this);
 
-    private void update() {
+    public void update() {
         countDown = countDown - 40;
         if (countDown > 0) {
             handler.sleep(40);
@@ -154,7 +155,9 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
     //Création point de vie----------------------------------------------------------------------MADE BY #TeamCoupDeGriffe-----------------------------------------
     void updateVie() {
         ((TextView) findViewById(R.id.vieView)).setText("Vies : " + roomView.hero.vie);
-
+        if (roomView.hero.vie<1) {
+            countDown = 0;
+        }
     }
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
