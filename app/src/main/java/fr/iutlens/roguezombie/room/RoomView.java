@@ -57,8 +57,8 @@ public class RoomView extends View {
 
     private int w,h,x,y,dir;
     private boolean roomChanged;
-    private int xtrappe = 2;
-    private int ytrappe = 3;
+    private int xtrappe;
+    private int ytrappe;
 
     public RoomView(Context context) {
         super(context);
@@ -158,8 +158,8 @@ public class RoomView extends View {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        /*xtrappe = (int) (Math.random() * (6 - 1) + 1);
-        ytrappe = (int) (Math.random() * (6 - 1) + 1);*/
+       xtrappe = (int) (Math.random() * (6 - 1) + 1);
+        ytrappe = (int) (Math.random() * (6 - 1) + 1);
         this.roomChanged = true;
     }
 
@@ -201,16 +201,10 @@ public class RoomView extends View {
 
         }
 
-
-
-
         if (x== xtrappe && y== ytrappe) {
             int ndx = coordinate.getNdx(5,5);
-                map.put(ndx,new DecorSprite(x,y,ndx,0)); /* affichage trappe */
+            map.put(ndx,new DecorSprite(5,5,ndx,0)); /* affichage trappe */
         }
-
-
-
 
         int xm = (int) (Math.random() * (coordinate.getWidth() - 2));
         int ym = (int) (Math.random() * (coordinate.getHeight() - 2));
