@@ -104,8 +104,8 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
                     })
                     .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            MainActivity.this.finish();
-                            //TODO ICI TU RENVOIS VERS LE MENU
+                            Intent intent = new Intent(MainActivity.this, Accueil.class);
+                            startActivity(intent);
                         }
                     })
                     .setIcon(android.R.drawable.ic_dialog_alert)
@@ -116,10 +116,7 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //Remove title bar
-
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //Remove notification bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         super.onCreate(savedInstanceState);
@@ -166,7 +163,11 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
 
     //Création Timer----------------------------------------------------------------------MADE BY #TeamMoche-----------------------------------------
     void updateCountDown() {
-        ((TextView) findViewById(R.id.countDown)).setText("Temps : " + countDown / 1000 / 60 + ":" + countDown / 1000 % 60);
+        long minutes = countDown / 1000 / 60;
+        int secondes = (int) (countDown / 1000 % 60);
+        int sd = secondes/10;
+        int su = secondes%10;
+        ((TextView) findViewById(R.id.countDown)).setText("Temps : " + minutes + ":" + sd + su);
     }
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
