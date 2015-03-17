@@ -103,8 +103,8 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
                     })
                     .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            MainActivity.this.finish();
-                            //TODO ICI TU RENVOIS VERS LE MENU
+                            Intent intent = new Intent(MainActivity.this, Accueil.class);
+                            startActivity(intent);
                         }
                     })
                     .setIcon(android.R.drawable.ic_dialog_alert)
