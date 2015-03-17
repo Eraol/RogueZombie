@@ -120,11 +120,13 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
                 .setMessage("Vous avez mangé " + roomView.hero.score + " cerveaux, voulez vous recommencer ?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        ourSong.release();
                         startGame();
                     }
                 })
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        ourSong.release();
                         Intent intent = new Intent(MainActivity.this, Accueil.class);
                         startActivity(intent);
                     }
