@@ -13,6 +13,7 @@ public class HeroSprite extends MonsterSprite {
     private int nextDir;
     public int score;
     public int vie;
+    public int invincibilite =0;
 
 
     public float x, y;
@@ -32,8 +33,14 @@ public class HeroSprite extends MonsterSprite {
         ndx = room.getCoordinate().getNdx(Math.round(x), Math.round(y));
     }
 
+
     @Override
     public void act() {
+        if (invincibilite>0){
+            invincibilite=invincibilite-1;
+        }
+
+        Log.d("HeroSprite","Invincibilité :"+invincibilite);
 
         if (stop) {
             return;
@@ -53,8 +60,6 @@ public class HeroSprite extends MonsterSprite {
         int ySprite = Math.round(yFutur);
 
         int ndxFutur = room.getCoordinate().getNdx(xSprite, ySprite);
-
-        Log.d("HeroSprite", "x:" + x + " y:" + y + " ndx:" + ndx + " ndxFutur:" + ndxFutur);
 
         if (ndxFutur != ndx) {
 
@@ -192,4 +197,12 @@ public class HeroSprite extends MonsterSprite {
         this.stop = stop;
     }
 
+    public void hit() {
+        if (invincibilite ==0 && vie>0) {
+            vie = vie - 1;
+            invincibilite =60;
+        } else {
+            isDead();
+        }
+    }
 }

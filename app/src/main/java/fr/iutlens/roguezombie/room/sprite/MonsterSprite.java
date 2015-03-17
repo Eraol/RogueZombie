@@ -95,4 +95,5 @@ public class MonsterSprite implements Sprite {
     public void kill() {
         dead=true;
     }
+
 }

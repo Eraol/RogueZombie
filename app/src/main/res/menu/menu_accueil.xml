@@ -1,11 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools" tools:context="fr.iutlens.roguezombie.Accueil">
 
-    <item
-        android:id="@menu/menu_accueil"
-        android:title="@string/title_activity_accueil"
+
+    <item android:id="@+id/action_settings"
+        android:title="Accueil"
         android:orderInCategory="100"
         app:showAsAction="never" />
-
 </menu>

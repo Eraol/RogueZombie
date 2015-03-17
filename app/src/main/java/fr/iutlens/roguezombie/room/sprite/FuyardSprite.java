@@ -4,11 +4,10 @@ import fr.iutlens.roguezombie.room.RoomView;
 import fr.iutlens.roguezombie.util.Coordinate;
 
 /**
- * Created by felicia.garciafernandes on 27/01/15.
+ * Created by felicia.garciafernandes et quentin tshaimanga on 27/01/15.
  */
+
 public class FuyardSprite extends MonsterSprite {
-
-
     public FuyardSprite(int x, int y, int id, RoomView room) {
         super(x, y, id, room);
     }
@@ -34,7 +33,7 @@ public class FuyardSprite extends MonsterSprite {
             // Calcul du produit scalaire
             ScoreCoord = -ProduitScalaire(dX, dY, Coordinate.DIR8[i][0], Coordinate.DIR8[i][1]);
 
-            // teste si loin
+            //test si loin
             if(room.isFree(x+Coordinate.DIR8[i][0],y+Coordinate.DIR8[i][1]))  {
                     if(ScoreCoord > max) { // si possible et meilleur
                 max=ScoreCoord;
