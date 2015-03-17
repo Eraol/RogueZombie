@@ -201,16 +201,10 @@ public class RoomView extends View {
 
         }
 
-
-
-
         if (x== xtrappe && y== ytrappe) {
             int ndx = coordinate.getNdx(5,5);
-                map.put(ndx,new DecorSprite(x,y,ndx,0)); /* affichage trappe */
+            map.put(ndx,new DecorSprite(5,5,ndx,0)); /* affichage trappe */
         }
-
-
-
 
         int xm = (int) (Math.random() * (coordinate.getWidth() - 2));
         int ym = (int) (Math.random() * (coordinate.getHeight() - 2));
