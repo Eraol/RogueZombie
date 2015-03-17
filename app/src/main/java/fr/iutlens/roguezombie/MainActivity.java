@@ -3,6 +3,7 @@ package fr.iutlens.roguezombie;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -27,7 +28,7 @@ import fr.iutlens.roguezombie.util.Coordinate;
 
 
 public class MainActivity extends ActionBarActivity implements OnRoomOutListener {
-
+    MediaPlayer ourSong;
 
     private Maze maze;
     private Coordinate coordinate;
@@ -94,6 +95,7 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
             updateVie();
 
         } else {
+            ourSong.release();
             new AlertDialog.Builder(MainActivity.this)
                     .setTitle("Vous avez echoué")
                     .setMessage("Vous avez mangé " + roomView.hero.score + " cerveaux, voulez vous recommencer ?")
@@ -118,10 +120,8 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
     protected void onCreate(Bundle savedInstanceState) {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         // Création du layrinthe 10x10
         coordinate = new Coordinate(6, 6);
 
@@ -142,6 +142,8 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
         roomView.setRoom(3, 3, -1);
         countDown = 60 * 5 * 1000; // ICI TU MODIFIE LE TEMPS
         // On démarre le jeu !
+        ourSong = MediaPlayer.create(MainActivity.this, R.raw.music);
+        ourSong.start();
         update();
     }
 
@@ -222,13 +224,20 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
         switch (item.getItemId()) {
 
             case R.menu.menu_accueil:
+                ourSong.release();
                 Intent accueil = new Intent(this, Accueil.class);
                 startActivity(accueil);
                 return true;
 
             default:
+                ourSong.release();
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    protected void onPause(){
+        super.onPause();
+        ourSong.release();
     }
 
 
