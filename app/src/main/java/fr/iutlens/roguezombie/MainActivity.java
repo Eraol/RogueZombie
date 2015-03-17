@@ -79,7 +79,7 @@ public class MainActivity extends ActionBarActivity implements OnRoomOutListener
 
     private RefreshHandler handler = new RefreshHandler(this);
 
-    public void update() {
+    private void update() {
         countDown = countDown - 40;
         if (countDown > 0) {
             handler.sleep(40);

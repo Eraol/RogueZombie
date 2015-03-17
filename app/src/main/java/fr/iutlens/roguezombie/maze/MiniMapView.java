@@ -97,6 +97,8 @@ public class MiniMapView extends View {
         canvas.save();
         canvas.concat(transform);
 
+      //  canvas.drawColor(0xFF000000);
+
         //On parcours la carte
         for(int i = 0; i < coordinate.getWidth(); ++i){
             for(int j = 0; j < coordinate.getHeight(); ++j){
@@ -111,7 +113,7 @@ public class MiniMapView extends View {
             int i = coordinate.getI(last);
             int j = coordinate.getJ(last);
 
-            canvas.drawPoint(i + 0.5f, j + 0.5f, paint);
+           canvas.drawPoint(i + 0.5f, j + 0.5f, paint);
         }
 
         // On restore la transformation originale.
@@ -150,7 +152,6 @@ public class MiniMapView extends View {
         float[] s = {0.5f,0.5f};
         float[] d = new float[2];
         transform.mapVectors(d,s);
-
         paint.setStrokeWidth(d[0]);
     }
 
